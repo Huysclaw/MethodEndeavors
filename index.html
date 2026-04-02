@@ -1,14 +1,1239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Method Endeavors</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Method Endeavors</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--dark:#0e0e0e;--panel:#131313;--card:#181818;
+  --border:#2a2a2a;--border2:#333;--muted:#666;--dim:#999;
+  --text:#ddd;--white:#f0ece4;--accent:#c8a96e;--accent2:#a07840;--red:#8b1a1a;
+  --fh:'Bebas Neue',Impact,sans-serif;
+  --fu:'Barlow Condensed','Arial Narrow',sans-serif;
+  --fb:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--black);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:9999}
+.alert-bar{background:var(--red);padding:7px 28px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--fu);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ffcccc;border-bottom:1px solid #6b1010}
+.blink{width:6px;height:6px;background:#ff6666;border-radius:50%;animation:blink 1.2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+nav{background:rgba(8,8,8,.98);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:50}
+nav::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:2px;background:var(--accent)}
+.nav-brand{display:flex;align-items:center;gap:14px}
+.nav-logo-wrap{height:44px;display:flex;align-items:center}
+.nav-logo-wrap img{height:44px;width:auto;filter:invert(1)}
+.nav-brand-text{display:flex;flex-direction:column;line-height:1}
+.nav-brand-text .t1{font-family:var(--fh);font-size:18px;color:var(--white);letter-spacing:2px}
+.nav-brand-text .t2{font-family:var(--fu);font-size:9px;letter-spacing:3px;color:var(--accent);text-transform:uppercase}
+.nav-links{display:flex}
+.nav-btn{background:none;border:none;cursor:pointer;font-family:var(--fu);font-size:12px;padding:0 16px;height:64px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.nav-btn:hover{color:var(--dim)}
+.nav-btn.active{color:var(--white);border-bottom-color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.profile-btn{background:none;border:1px solid var(--border2);clip-path:polygon(0 0,94% 0,100% 15%,100% 100%,6% 100%,0 85%);padding:6px 12px;cursor:pointer;color:var(--dim);display:flex;align-items:center;gap:6px;font-family:var(--fu);font-size:11px;letter-spacing:1px;text-transform:uppercase;transition:border-color .15s,color .15s}
+.profile-btn:hover{border-color:var(--accent);color:var(--accent)}
+.cart-btn{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--border2);clip-path:polygon(0 0,94% 0,100% 15%,100% 100%,6% 100%,0 85%);padding:7px 18px;cursor:pointer;font-family:var(--fu);font-size:11px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;transition:border-color .15s,color .15s}
+.cart-btn:hover{border-color:var(--accent);color:var(--accent)}
+.cart-badge{background:var(--accent);color:#0d0d0d;font-size:10px;padding:1px 7px;font-weight:700}
+.search-icon-btn{background:none;border:none;cursor:pointer;color:var(--muted);display:flex;align-items:center;padding:6px;transition:color .15s}
+.search-icon-btn:hover{color:var(--accent)}
+.page{display:none}.page.active{display:block}
+.site-img{width:100%;height:100%;object-fit:cover;display:block}
+.divider{height:1px;background:var(--border)}
+.divider-accent{height:1px;background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) 30%,transparent 100%)}
+.eyebrow{font-family:var(--fu);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--accent)}
+.h-display{font-family:var(--fh);font-size:72px;line-height:.9;color:var(--white);letter-spacing:2px}
+.h-xl{font-family:var(--fh);font-size:52px;line-height:.95;color:var(--white);letter-spacing:2px}
+.h-lg{font-family:var(--fh);font-size:38px;line-height:1;color:var(--white);letter-spacing:1px}
+.h-md{font-family:var(--fh);font-size:28px;line-height:1.05;color:var(--white);letter-spacing:1px}
+.h-sm{font-family:var(--fu);font-size:16px;font-weight:600;color:var(--white);letter-spacing:.5px}
+.lead{font-family:var(--fb);font-size:14px;color:var(--dim);line-height:1.75}
+.small{font-family:var(--fu);font-size:12px;color:var(--muted);letter-spacing:.5px}
+.sec-num{font-family:var(--fh);font-size:80px;color:rgba(200,169,110,.06);position:absolute;top:20px;right:36px;line-height:1;user-select:none;pointer-events:none}
+.btn-primary{background:var(--accent);color:#080808;border:none;clip-path:polygon(0 0,95% 0,100% 20%,100% 100%,5% 100%,0 80%);padding:13px 28px;font-family:var(--fu);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:background .15s;text-decoration:none}
+.btn-primary:hover{background:#dbb97e}
+.btn-outline{background:transparent;border:1px solid var(--border2);clip-path:polygon(0 0,95% 0,100% 20%,100% 100%,5% 100%,0 80%);padding:11px 24px;font-family:var(--fu);font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:var(--dim);display:inline-flex;align-items:center;gap:8px;transition:border-color .15s,color .15s;text-decoration:none}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost{background:transparent;border:none;cursor:pointer;font-family:var(--fu);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:0;display:inline-flex;align-items:center;gap:8px;transition:color .15s}
+.btn-ghost:hover{color:var(--accent)}
+.tag{font-family:var(--fu);display:inline-block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border)}
+.tag.gold{background:rgba(200,169,110,.1);color:var(--accent);border-color:rgba(200,169,110,.3)}
+.tag.red{background:rgba(139,26,26,.2);color:#e06060;border-color:rgba(139,26,26,.5)}
+.section{max-width:1140px;margin:0 auto;padding:56px 36px}
+.section-sm{max-width:700px;margin:0 auto;padding:52px 36px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.flex-col{display:flex;flex-direction:column;gap:4px}
+.b-grid{border:1px solid var(--border);overflow:hidden}
+.b-grid>*{border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.section-head{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border);position:relative}
+.section-head::after{content:'';position:absolute;bottom:-1px;left:0;width:60px;height:1px;background:var(--accent)}
+.stripe-head{display:flex;align-items:center;margin-bottom:4px}
+.stripe-head::before{content:'';display:inline-block;width:4px;height:28px;background:var(--accent);margin-right:12px;flex-shrink:0}
+.info-panel{background:var(--panel);border:1px solid var(--border);border-left:2px solid var(--accent);padding:18px 20px}
+.info-panel-label{font-family:var(--fu);font-size:10px;color:var(--accent);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.card-box{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--accent);padding:28px 32px}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.95) 0%,rgba(8,8,8,.5) 50%,rgba(8,8,8,.2) 100%)}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:52px}
+.corner-tl{position:absolute;top:20px;left:20px;width:50px;height:50px;border-top:1px solid var(--accent);border-left:1px solid var(--accent)}
+.corner-tr{position:absolute;top:20px;right:20px;width:50px;height:50px;border-top:1px solid var(--accent);border-right:1px solid var(--accent)}
+.ticker{background:var(--panel);border-bottom:1px solid var(--border);padding:12px 28px;display:flex;gap:36px;justify-content:center;flex-wrap:wrap}
+.ticker-item{display:flex;align-items:center;gap:8px}
+.ticker-dot{width:4px;height:4px;background:var(--accent);flex-shrink:0;transform:rotate(45deg)}
+.ticker-item span{font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.stats-bar{background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat-cell{text-align:center;padding:32px 24px;border-right:1px solid var(--border);position:relative}
+.stat-cell::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:40px;height:2px;background:var(--accent)}
+.stat-num{font-family:var(--fh);font-size:44px;color:var(--accent);letter-spacing:2px;line-height:1;margin-bottom:6px}
+.stat-lbl{font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.cap-card{background:var(--card);padding:28px 24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s}
+.cap-card:hover{background:#1c1c1c}
+.cap-card:hover .cap-arrow{opacity:1;transform:translateX(0)}
+.cap-icon{font-size:22px;color:var(--accent);margin-bottom:16px;display:block}
+.cap-title{font-family:var(--fu);font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px}
+.cap-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.cap-arrow{font-family:var(--fu);font-size:11px;color:var(--accent);letter-spacing:1px;margin-top:14px;opacity:0;transform:translateX(-6px);transition:all .2s}
+.product-card{background:var(--card);display:flex;flex-direction:column;border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
+.product-body{padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.product-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border);margin-top:auto}
+.price{font-family:var(--fh);font-size:22px;color:var(--white);letter-spacing:1px}
+.select-btn{background:transparent;border:1px solid var(--border2);clip-path:polygon(0 0,88% 0,100% 30%,100% 100%,12% 100%,0 70%);padding:7px 16px;font-family:var(--fu);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;color:var(--dim);transition:all .15s}
+.select-btn:hover,.select-btn.open{border-color:var(--accent);color:var(--accent)}
+.product-expand{max-height:0;overflow:hidden;transition:max-height .3s ease;border-top:0 solid var(--border)}
+.product-expand.open{max-height:400px;border-top:1px solid var(--border);padding:16px 0 4px}
+.expand-label{font-family:var(--fu);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.size-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.size-btn{font-family:var(--fu);font-size:11px;font-weight:700;letter-spacing:1px;min-width:40px;height:36px;padding:0 8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.size-btn:hover:not(.sold-out){border-color:var(--dim);color:var(--dim)}
+.size-btn.selected{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,.1)}
+.size-btn.sold-out{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+.size-error{font-family:var(--fu);font-size:10px;color:#e06060;letter-spacing:.5px;margin-bottom:10px;display:none}
+.qty-row{display:flex;align-items:center;gap:0;margin-bottom:14px}
+.qty-btn{background:var(--panel);border:1px solid var(--border);width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--accent);display:flex;align-items:center;justify-content:center;transition:border-color .15s;flex-shrink:0;line-height:1}
+.qty-btn:hover{border-color:var(--accent)}
+.qty-display{font-family:var(--fh);font-size:18px;color:var(--white);min-width:40px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:32px;line-height:32px;background:var(--panel)}
+.add-to-cart-btn{width:100%;padding:11px 0;background:var(--accent);color:#080808;border:none;font-family:var(--fu);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .15s;clip-path:polygon(0 0,96% 0,100% 30%,100% 100%,4% 100%,0 70%)}
+.add-to-cart-btn:hover{background:#dbb97e}
+.filter-bar{display:flex;gap:10px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%)}
+.search-wrap input{width:100%;padding:0 12px 0 36px;height:38px;border:1px solid var(--border);background:var(--panel);font-family:var(--fu);font-size:13px;color:var(--text);outline:none}
+.cat-btn{font-family:var(--fu);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 16px;border:1px solid var(--border);cursor:pointer;background:transparent;color:var(--muted);transition:all .15s}
+.cat-btn.active{border-color:var(--accent);background:rgba(200,169,110,.08);color:var(--accent)}
+.date-slot{padding:14px 18px;border:1px solid var(--border);background:var(--panel);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .15s}
+.date-slot:hover{border-color:var(--accent)}
+.domain-card{background:var(--card);padding:28px 24px;border-right:1px solid var(--border)}
+.domain-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.domain-icon{font-size:20px;color:var(--accent)}
+.domain-img{width:100%;height:140px;object-fit:cover;margin-top:16px;display:block}
+.exp-cell{background:var(--card);padding:16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.exp-dot{width:4px;height:4px;background:var(--accent);transform:rotate(45deg);margin-bottom:10px}
+.exp-cell p{font-family:var(--fu);font-size:12px;color:#bbb}
+.presence-cell{background:var(--card);padding:22px;text-align:center;border-right:1px solid var(--border)}
+.form-box{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--accent);padding:36px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-family:var(--fu);font-size:10px;font-weight:600;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.form-input,.form-select,.form-textarea{border:1px solid var(--border);background:var(--dark);color:var(--text);outline:none;font-family:var(--fb);font-size:13px;transition:border-color .15s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent)}
+.form-input,.form-select{height:40px;padding:0 14px;width:100%}
+.form-textarea{padding:12px 14px;resize:vertical;line-height:1.6;width:100%}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.success-box{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--accent);padding:56px;text-align:center}
+.cart-overlay{display:none;position:fixed;inset:0;z-index:100}
+.cart-overlay.open{display:flex}
+.cart-backdrop{flex:1;background:rgba(0,0,0,.7)}
+.cart-panel{width:360px;background:var(--dark);border-left:1px solid var(--border);border-top:2px solid var(--accent);display:flex;flex-direction:column;padding:28px;min-height:100vh;overflow-y:auto}
+.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.cart-title{font-family:var(--fh);font-size:22px;color:var(--white);letter-spacing:2px}
+.cart-close{background:none;border:1px solid var(--border);width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.cart-items{flex:1;display:flex;flex-direction:column;gap:12px}
+.cart-item{padding:14px;background:var(--panel);border:1px solid var(--border);border-left:2px solid var(--accent2);display:flex;flex-direction:column;gap:8px}
+.cart-item-top{display:flex;justify-content:space-between;align-items:flex-start}
+.cart-item-name{font-family:var(--fu);font-weight:600;font-size:13px;color:var(--text);flex:1}
+.cart-item-remove{background:none;border:none;cursor:pointer;font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;transition:color .15s;white-space:nowrap;margin-left:8px}
+.cart-item-remove:hover{color:#e06060}
+.cart-item-bottom{display:flex;align-items:center;justify-content:space-between}
+.cqty-wrap{display:flex;align-items:center}
+.cqty-btn{background:var(--card);border:1px solid var(--border);width:26px;height:26px;cursor:pointer;font-size:16px;color:var(--accent);display:flex;align-items:center;justify-content:center;line-height:1}
+.cqty-num{font-family:var(--fh);font-size:16px;color:var(--white);min-width:32px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:26px;line-height:26px;background:var(--panel)}
+.cart-item-price{font-family:var(--fh);font-size:16px;color:var(--accent)}
+.cart-footer{border-top:1px solid var(--border);padding-top:20px;margin-top:20px}
+.cart-total-row{display:flex;justify-content:space-between;margin-bottom:18px;align-items:baseline}
+.cart-total-lbl{font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.cart-total-val{font-family:var(--fh);font-size:28px;color:var(--accent);letter-spacing:2px}
+.checkout-btn{width:100%;padding:14px 0;background:var(--accent);color:#080808;border:none;font-family:var(--fu);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .15s}
+.checkout-btn:hover{background:#dbb97e}
+.cart-empty{font-family:var(--fu);color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--dark);border:1px solid var(--border);border-top:2px solid var(--accent);padding:36px;width:100%;max-width:420px;position:relative}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted)}
+.modal-tabs{display:flex;margin-bottom:28px;border-bottom:1px solid var(--border)}
+.modal-tab{font-family:var(--fu);font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;background:none;border:none;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s}
+.modal-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.modal-section{display:none}
+.modal-section.active{display:block}
+.profile-panel{display:none;position:fixed;top:0;right:0;bottom:0;z-index:150;width:360px;background:var(--dark);border-left:1px solid var(--border);border-top:2px solid var(--accent);flex-direction:column;padding:28px;overflow-y:auto}
+.profile-panel.open{display:flex}
+.profile-panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.profile-panel-title{font-family:var(--fh);font-size:22px;color:var(--white);letter-spacing:2px}
+.panel-close{background:none;border:1px solid var(--border);width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.profile-avatar{width:64px;height:64px;border-radius:50%;background:rgba(200,169,110,.1);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:24px;color:var(--accent);margin:0 auto 12px}
+.profile-user-name{font-family:var(--fh);font-size:20px;color:var(--white);letter-spacing:1px;text-align:center;margin-bottom:4px}
+.profile-user-email{font-family:var(--fu);font-size:11px;color:var(--muted);text-align:center;margin-bottom:24px}
+.profile-section-label{font-family:var(--fu);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.profile-section-label::before{content:'';display:block;width:14px;height:1px;background:var(--accent)}
+.history-item{background:var(--panel);border:1px solid var(--border);border-left:2px solid var(--accent2);padding:12px 14px;margin-bottom:8px}
+.history-item-name{font-family:var(--fu);font-weight:600;font-size:13px;color:var(--text)}
+.history-item-meta{font-family:var(--fu);font-size:11px;color:var(--muted);margin-top:2px}
+.donate-banner{background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.newsletter{padding:56px 32px;text-align:center;background:var(--panel)}
+.nl-form{display:flex;justify-content:center;max-width:440px;margin:0 auto}
+.nl-form input{flex:1;height:44px;border:1px solid var(--border);border-right:none;background:var(--dark);padding:0 16px;font-family:var(--fu);font-size:13px;color:var(--text);outline:none}
+.nl-form button{background:var(--accent);color:#080808;border:none;padding:0 22px;font-family:var(--fu);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+footer{border-top:1px solid var(--border);padding:24px 36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:#080808}
+.footer-copy{font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:1px}
+.footer-social{display:flex;gap:14px}
+.footer-social a{color:var(--muted);text-decoration:none;font-family:var(--fu);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;transition:color .15s}
+.footer-social a:hover{color:var(--accent)}
+#nav-search-box{display:none;position:absolute;right:160px;top:50%;transform:translateY(-50%);background:var(--panel);border:1px solid var(--border);border-bottom:1px solid var(--accent);align-items:center}
+#nav-search-input{width:220px;height:36px;background:transparent;border:none;padding:0 12px;font-family:var(--fu);font-size:12px;letter-spacing:.5px;color:var(--text);outline:none}
+#nav-search-clear{background:none;border:none;cursor:pointer;color:var(--muted);padding:0 10px;font-size:14px}
+#nav-search-results{display:none;position:fixed;top:64px;right:0;width:320px;background:var(--dark);border:1px solid var(--border);border-top:none;border-bottom:2px solid var(--accent);z-index:49;max-height:400px;overflow-y:auto}
+.search-result-row{padding:12px 18px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.search-result-row:hover{background:var(--card)}
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.95);align-items:center;justify-content:center;flex-direction:column}
+.lightbox.open{display:flex}
+.lightbox-img{max-width:90vw;max-height:80vh;object-fit:contain;border:1px solid var(--border)}
+.lightbox-close{position:absolute;top:20px;right:24px;background:none;border:1px solid var(--border);color:var(--muted);font-size:20px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s}
+.lightbox-close:hover{border-color:var(--accent);color:var(--accent)}
+.lightbox-nav{display:flex;align-items:center;gap:16px;margin-top:16px}
+.lightbox-arrow{background:none;border:1px solid var(--border);color:var(--muted);width:36px;height:36px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.lightbox-arrow:hover{border-color:var(--accent);color:var(--accent)}
+.lightbox-dots{display:flex;gap:6px}
+.lightbox-dot{width:6px;height:6px;background:var(--border2);border:none;cursor:pointer;transform:rotate(45deg);transition:background .15s}
+.lightbox-dot.active{background:var(--accent)}
+.lightbox-caption{font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:10px}
+.trailer-section{background:var(--dark);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.trailer-inner{max-width:1140px;margin:0 auto;padding:56px 36px}
+.trailer-player-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid var(--border);overflow:hidden;margin-top:32px}
+.trailer-player-wrap iframe{width:100%;height:100%;border:none;display:block}
+.trailer-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.08) 3px,rgba(0,0,0,.08) 4px);pointer-events:none;z-index:2}
+.trailer-label{position:absolute;top:16px;left:16px;background:rgba(8,8,8,.85);border:1px solid var(--border);border-left:2px solid var(--accent);padding:6px 14px;z-index:3;pointer-events:none}
+.trailer-label span{font-family:var(--fu);font-size:10px;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
+.trailer-rec{position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:6px;background:rgba(8,8,8,.85);border:1px solid var(--border);padding:5px 12px;z-index:3;pointer-events:none}
+.trailer-rec span{font-family:var(--fu);font-size:9px;color:#e06060;letter-spacing:2px;text-transform:uppercase}
+.trailer-stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-top:none;overflow:hidden}
+.trailer-stat{padding:16px 20px;border-right:1px solid var(--border);background:var(--panel)}
+.trailer-stat:last-child{border-right:none}
+.trailer-stat-label{font-family:var(--fu);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.trailer-stat-val{font-family:var(--fh);font-size:22px;color:var(--accent);letter-spacing:1px}
+/* Spotlight */
+.spotlight-section{background:var(--black);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.spotlight-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent)}
+.spotlight-inner{max-width:1140px;margin:0 auto;padding:56px 36px;display:grid;gap:52px;align-items:center}
+.spotlight-frame{position:relative;background:var(--card);border:1px solid var(--border);overflow:hidden}
+.spotlight-frame iframe{width:100%;height:100%;border:none;display:block;position:absolute;inset:0}
+.yt-corner{position:absolute;width:24px;height:24px;z-index:2;pointer-events:none}
+.yt-corner.tl{top:10px;left:10px;border-top:1px solid var(--accent);border-left:1px solid var(--accent)}
+.yt-corner.tr{top:10px;right:10px;border-top:1px solid var(--accent);border-right:1px solid var(--accent)}
+.yt-corner.bl{bottom:10px;left:10px;border-bottom:1px solid var(--accent);border-left:1px solid var(--accent)}
+.yt-corner.br{bottom:10px;right:10px;border-bottom:1px solid var(--accent);border-right:1px solid var(--accent)}
+.spotlight-meta-row{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap}
+.spotlight-meta-item{font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.spotlight-meta-item::before{content:'';width:4px;height:4px;background:var(--accent);transform:rotate(45deg);display:block}
+/* Social */
+.social-section{background:var(--black);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.social-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(200,169,110,.04) 0%,transparent 70%)}
+.social-inner{max-width:1140px;margin:0 auto;padding:56px 36px}
+.social-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid var(--border);position:relative}
+.social-header::after{content:'';position:absolute;bottom:-1px;left:0;width:60px;height:1px;background:var(--accent)}
+.social-platforms{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);overflow:hidden}
+.social-card{background:var(--card);padding:0;position:relative;overflow:hidden;transition:background .2s;display:flex;flex-direction:column;cursor:pointer;text-decoration:none;color:inherit}
+.social-card:hover{background:#1c1c1c}
+.social-card:hover .social-card-arrow{opacity:1;transform:translate(0,0)}
+.social-card:hover .social-card-play{opacity:1}
+.social-card-media{width:100%;height:220px;overflow:hidden;position:relative;flex-shrink:0}
+.social-card-media img{width:100%;height:100%;object-fit:cover;display:block}
+.social-card-media-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(8,8,8,.95) 100%)}
+.social-card-platform{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:7px;background:rgba(8,8,8,.75);border:1px solid var(--border);padding:5px 10px}
+.social-card-platform span{font-family:var(--fu);font-size:10px;color:var(--white);letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+.social-card-play{position:absolute;bottom:14px;right:14px;width:36px;height:36px;background:var(--accent);clip-path:polygon(0 0,90% 0,100% 20%,100% 100%,10% 100%,0 80%);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.social-card-body{padding:20px 22px 22px;flex:1;display:flex;flex-direction:column;gap:10px}
+.social-card-tag{font-family:var(--fu);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.social-card-tag::before{content:'';width:16px;height:1px;background:var(--accent)}
+.social-card-title{font-family:var(--fu);font-size:14px;font-weight:700;color:var(--white);line-height:1.3}
+.social-card-handle{font-family:var(--fu);font-size:11px;color:var(--accent);letter-spacing:1px;margin-top:auto;padding-top:10px;border-top:1px solid var(--border)}
+.social-card-arrow{font-family:var(--fu);font-size:10px;color:var(--accent);letter-spacing:2px;opacity:0;transform:translate(-8px,4px);transition:all .25s;position:absolute;bottom:20px;right:20px}
+.reel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px}
+.reel-thumb{aspect-ratio:9/16;background:var(--panel);position:relative;overflow:hidden;cursor:pointer;display:block;text-decoration:none}
+.reel-thumb:hover .reel-hover{opacity:1}
+.reel-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.reel-hover{position:absolute;inset:0;background:rgba(8,8,8,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0;transition:opacity .2s}
+.reel-hover-icon{width:40px;height:40px;background:rgba(200,169,110,.15);border:1px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.reel-hover span{font-family:var(--fu);font-size:9px;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
+.reel-label{position:absolute;bottom:8px;left:8px;background:rgba(8,8,8,.8);padding:3px 8px}
+.reel-label span{font-family:var(--fu);font-size:9px;color:var(--muted);letter-spacing:1px}
+.ig-live-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);padding:3px 10px;font-family:var(--fu);font-size:9px;font-weight:700;letter-spacing:1.5px;color:#fff;text-transform:uppercase}
+.follow-cta{background:var(--panel);border:1px solid var(--border);border-top:none;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.follow-cta-left{display:flex;align-items:center;gap:14px}
+.follow-cta-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);padding:2px;flex-shrink:0}
+.follow-cta-avatar-inner{width:100%;height:100%;border-radius:50%;background:var(--card);overflow:hidden}
+.follow-cta-avatar-inner img{width:100%;height:100%;object-fit:cover}
+.follow-cta-text .handle{font-family:var(--fu);font-size:13px;font-weight:700;color:var(--white);letter-spacing:.5px}
+.follow-cta-text .sub{font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:2px}
+</style>
 </head>
 <body>
-  <div id="root"></div>
+<div id="root"></div>
+<script>
+var CDN='images/';
+var LOGO='images/logo.png';
+var IMG={
+  laser:'images/training-private-1.png',
+  ops9:'images/training-notimetodie-1.png',
+  f3:'images/training-notimetodie-2.png',
+  f16:'images/training-3day-1.png',
+  f35:'images/training-private-3.png',
+  f0541:'images/training-private-4.png',
+  f31:'images/training-3day-2.png',
+  f13:'images/training-notimetodie-3.png'
+};
+var YT_CHANNEL='UCJ7LaGCkkqdegVerN_INj2Q';
+var YT_TRAILER='_f5FMgbSBFg';
 
-  <!-- IMPORTANT: script must be at the bottom, after the div -->
-  <script src="app.js"></script>
+/* ── SPOTLIGHT CONFIG ── paste any YouTube/Instagram Reel/X URL below ──────── */
+var SPOTLIGHT_URL='';
+var SPOTLIGHT_LABEL='Latest from the Field';
+var SPOTLIGHT_TITLE='What We Have Been Up To';
+var SPOTLIGHT_DESC='The latest from Method operators - in the field, in training, and on the ground. Check back for updates as they happen.';
+var SPOTLIGHT_CTA_TEXT='View All Content';
+var SPOTLIGHT_CTA_URL='https://www.youtube.com/channel/'+YT_CHANNEL;
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+var SHOP_BASE='#';
+var IMG_MMR_BF='images/metal-method-risk-front-black.png';
+var IMG_MMR_BB='images/metal-method-risk-back-black.png';
+var IMG_MMR_WF='images/metal-method-risk-front-white.png';
+var IMG_MMR_WB='images/metal-method-risk-back-white.png';
+var IMG_MOT_F='images/method-original-front-black.png';
+var IMG_MOT_B='images/method-original-back-black.png';
+var IMG_CAP1='images/upside-down-cap-1.png';
+var IMG_CAP2='images/upside-down-cap-2.png';
+var IMG_CAP3='images/upside-down-cap-3.png';
+var IMG_HAT1='images/og-team-hat-1.png';
+var IMG_HAT2='images/og-team-hat-2.png';
+var IMG_HAT3='images/og-team-hat-3.png';
+var IMG_WPF='images/war-profiteer-front-black.png';
+var IMG_WPB='images/war-profiteer-back-black.png';
+var IMG_WPW_F='images/war-profiteer-white-front.png';
+var IMG_WPW_B='images/war-profiteer-back-white.png';
+var IMG_WXF='images/war-xchange-front.png';
+var IMG_WXB='images/war-xchange-back.png';
+var IMG_WPC_F='images/wp-committed-front.png';
+var IMG_WPC_B='images/wp-committed-back.png';
+var IMG_J1='images/fmj-front.png';
+var IMG_J2='images/fmj-closer-front.png';
+var IMG_J3='images/fmj-inside.png';
+var IMG_J4='images/fmj-logo.png';
+var IMG_J5='images/fmj-vehicle.png';
+
+var SHOP_ITEMS=[
+  {id:1,name:'War Profiteer Graffiti',cat:'Apparel',price:35,tag:'New Drop',
+   desc:'Classic War Profiteer streetwear. Heavyweight tee, conflict-inspired graphics.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Black',swatch:'#111',images:[IMG_WPF,IMG_WPB]},
+     {name:'White',swatch:'#f0ece4',images:[IMG_WPW_F,IMG_WPW_B]}
+   ],
+   sizes:['S','M','L','XL','XXL'],soldOut:[]},
+  {id:2,name:'Metal Method Risk',cat:'Apparel',price:35,tag:'',
+   desc:'Risk Over Regret. Bold graphic tee from the Metal Method series.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Black',swatch:'#111',images:[IMG_MMR_BF,IMG_MMR_BB]},
+     {name:'White',swatch:'#f0ece4',images:[IMG_MMR_WF,IMG_MMR_WB]}
+   ],
+   sizes:['S','M','L','XL','XXL'],soldOut:[]},
+  {id:3,name:'Method Original Team',cat:'Apparel',price:35,tag:'',
+   desc:'The Method OG. Classic drop, heavyweight construction, operator-approved.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Black',swatch:'#111',images:[IMG_MOT_F,IMG_MOT_B]}
+   ],
+   sizes:['S','M','L','XL','XXL'],soldOut:[]},
+  {id:4,name:'Upside Down Dad Cap',cat:'Apparel',price:40,tag:'',
+   desc:'Method Conflict Series dad cap. Denim construction, structured fit.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Denim',swatch:'#4a6fa5',images:[
+       'images/upside-down-cap-1.png',
+       'images/upside-down-cap-2.png',
+       'images/upside-down-cap-3.png'
+     ]}
+   ],
+   sizes:['One Size'],soldOut:[]},
+  {id:5,name:'Method OG Team Hat',cat:'Apparel',price:40,tag:'',
+   desc:'Premium MCB and leather construction. Fits all sizes.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Black',swatch:'#111',images:[
+       'images/og-team-hat-1.png',
+       'images/og-team-hat-2.png',
+       'images/og-team-hat-3.png'
+     ]}
+   ],
+   sizes:['One Size'],soldOut:[]},
+  {id:6,name:'WP - Committed to Conflict',cat:'Apparel',price:35,tag:'',
+   desc:'War Profiteer series. Committed to the conflict, built for the field.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Black',swatch:'#111',images:[IMG_WPC_F,IMG_WPC_B]}
+   ],
+   sizes:['S','M','L','XL','XXL'],soldOut:[]},
+  {id:7,name:'War / Xchange',cat:'Apparel',price:35,tag:'',
+   desc:'Method Conflict Series. The exchange - built from the ground up.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Black',swatch:'#111',images:[IMG_WXF,IMG_WXB]}
+   ],
+   sizes:['S','M','L','XL','XXL'],soldOut:[]},
+  {id:8,name:'FMJ Waxed Operator Jacket',cat:'Outerwear',price:250,tag:'Limited',
+   desc:'Waxed canvas, water resistant. Desert Tiger Stripe fleece lining. Made in the USA.',
+   url:SHOP_BASE,
+   colors:[
+     {name:'Waxed Canvas',swatch:'#3a3028',images:[IMG_J1,IMG_J2,IMG_J3,IMG_J4,IMG_J5]}
+   ],
+   sizes:['XS','S','M','L','XL','2XL'],soldOut:['XS','S','M','L','XL','2XL']}
+];
+
+var TRAINING_ITEMS=[
+  {id:'t1',name:'Private All Inclusive 1-on-1 Firearms Course',tag:'Private',level:'All levels',dur:'1 day',price:3200,
+   img:'images/training-private-1.png',
+   desc:'The most personalized firearms training available. Fully customized curriculum. All-inclusive: instruction, ammunition, range fees and equipment.',
+   highlights:['100% custom curriculum','Private range - no other students','All ammunition and equipment included','Former SOF instructor 1-on-1 all day','Pistol, rifle or both'],
+   dates:['May 10 2025','May 17 2025','May 24 2025','Jun 7 2025','Jun 14 2025','Jun 21 2025']},
+  {id:'t2',name:'No Time to Die',tag:'Elite Experience',level:'Advanced',dur:'Multi-day',price:107000,
+   img:'images/training-notimetodie-1.png',
+   desc:'An unparalleled covert operative mission and experience. Full mission briefing, cover legend, extraction planning and live execution alongside Method operators.',
+   highlights:['Full covert operative experience','Live mission planning and execution','Method operators embedded with you','Private jet transport included','Location undisclosed'],
+   dates:['By appointment only']},
+  {id:'t3',name:'3 Day Weapon Mastery Lab',tag:'Elite Echelon',level:'Intermediate to Advanced',dur:'3 days',price:null,
+   img:'images/training-3day-1.png',
+   desc:'Intensive 3-day weapons programme covering pistol and rifle systems, manipulations, shooting on the move, low-light operations and stress inoculation.',
+   highlights:['Pistol and rifle systems mastery','Shooting on the move','Low-light and night operations','Stress inoculation drills','Max 6 students per class'],
+   dates:['May 19-21 2025','Jun 16-18 2025','Jul 14-16 2025','Aug 11-13 2025']}
+];
+var INFO_COURSES=[
+  {name:'Pistol',img:'images/pistol.png',desc:'Fundamentals through advanced pistol handling, presentation, accuracy and speed drills.'},
+  {name:'Rifle',img:'images/rifle.png',desc:'Carbine and rifle systems, zeroing, transitions, positional shooting and force-on-force.'},
+  {name:'CQML',img:'images/cqml.png',desc:'Close Quarters Marksmanship Lab - threat identification, room dynamics and target discrimination.'},
+  {name:'Everyday Carry',img:'images/everyday-carry.png',desc:'Concealed carry, draw-stroke development, legal framework and situational awareness.'},
+  {name:'Close Quarters Battle',img:'images/close-quarters-battle.png',desc:'Team-based CQB, immediate action drills, breach and clear, and hostile environment protocol.'},
+  {name:'Distance Learning',img:'images/distance-learning.png',desc:'Remote and online instruction for those unable to attend in person. Custom curriculum.'},
+  {name:'Combat Lab',img:'images/combat.png',desc:'Live-fire scenario lab combining all core disciplines under time pressure and stress.'},
+  {name:'Performance Driving',img:'images/performance-driving.png',desc:'Offensive and defensive driving, vehicle ambush response, PIT maneuver and escort operations.'},
+  {name:'Defender Close Protection',img:'images/defender.png',desc:'Protective security fundamentals, principal movement, advance work and threat response.'}
+];
+
+var cart=[],activeCat='All',accounts={},currentUser=null,bookingCourse=null,bookingDate=null;
+var shopState={};
+
+function g(id){return document.getElementById(id);}
+function fmt(n){return Number(n).toLocaleString();}
+function ni(){return "this.style.background='#1a1a1a'";}
+
+function sState(id){
+  if(!shopState[id])shopState[id]={colorIdx:0,imgIdx:0,qty:1,size:null};
+  return shopState[id];
+}
+function shopSetColor(id,ci){
+  var st=sState(id);st.colorIdx=ci;st.imgIdx=0;st.size=null;
+  renderShop();
+  var p=g('pexpand-'+id);if(p)p.classList.add('open');
+}
+function shopSetImg(id,idx){
+  var st=sState(id);
+  st.imgIdx=idx;
+  renderShop();
+  /* re-open expand if it was open */
+  var p=g('pexpand-'+id);if(p&&p.dataset.wasOpen)p.classList.add('open');
+}
+
+/* SVG icons */
+function iYT(c){c=c||'var(--accent)';return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="'+c+'" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 1.97C5.12 20 12 20 12 20s6.88 0 8.6-.45a2.78 2.78 0 0 0 1.94-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="'+c+'" stroke="none"/></svg>';}
+function iIG(c){c=c||'var(--accent)';return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="'+c+'" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>';}
+function iX(c){c=c||'var(--accent)';return '<svg width="14" height="14" viewBox="0 0 24 24" fill="'+c+'"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';}
+
+/* Spotlight */
+function parseSpotlight(url){
+  if(!url||!url.trim())return{type:'empty'};
+  var yt=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if(yt)return{type:'youtube',embed:'https://www.youtube.com/embed/'+yt[1]+'?rel=0&modestbranding=1&color=white',icon:'yt',label:'YouTube',aspect:'16/9'};
+  var ig=url.match(/instagram\.com\/(?:reel|p)\/([A-Za-z0-9_-]+)/);
+  if(ig)return{type:'instagram',embed:'https://www.instagram.com/p/'+ig[1]+'/embed/captioned/',icon:'ig',label:'Instagram Reel',aspect:'4/5'};
+  var tw=url.match(/(?:twitter|x)\.com\/\w+\/status\/(\d+)/);
+  if(tw)return{type:'twitter',embed:'https://platform.twitter.com/embed/Tweet.html?id='+tw[1]+'&theme=dark&dnt=true',icon:'x',label:'X Post',aspect:'4/5'};
+  return{type:'empty'};
+}
+function spIco(type){return type==='youtube'?iYT():type==='instagram'?iIG():type==='twitter'?iX():'';}
+
+function buildSpotlightSection(){
+  var sp=parseSpotlight(SPOTLIGHT_URL);
+  var portrait=(sp.aspect==='4/5');
+  var cols=portrait?'1fr 1fr':'1fr 1.5fr';
+  var ico=spIco(sp.type);
+  var ctaUrl=SPOTLIGHT_URL||SPOTLIGHT_CTA_URL;
+
+  var txt='<div>';
+  txt+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">'+ico+'<p class="eyebrow" style="margin:0;">'+SPOTLIGHT_LABEL+'</p></div>';
+  txt+='<div class="h-xl" style="margin-bottom:18px;"><span style="color:var(--accent)">'+SPOTLIGHT_TITLE+'</span></div>';
+  txt+='<p class="lead" style="margin-bottom:28px;">'+SPOTLIGHT_DESC+'</p>';
+  txt+='<a href="'+ctaUrl+'" target="_blank" class="btn-outline" style="gap:8px;">'+ico+SPOTLIGHT_CTA_TEXT+'</a>';
+  txt+='<div class="spotlight-meta-row">';
+  if(sp.label)txt+='<div class="spotlight-meta-item">'+sp.label+'</div>';
+  txt+='<div class="spotlight-meta-item">Method Endeavors</div>';
+  txt+='</div></div>';
+
+  var pad=portrait?'125':'56.25';
+  var emb='<div><div class="spotlight-frame" style="position:relative;padding-top:'+pad+'%;">';
+  emb+='<div class="yt-corner tl"></div><div class="yt-corner tr"></div><div class="yt-corner bl"></div><div class="yt-corner br"></div>';
+  if(sp.embed){
+    emb+='<iframe src="'+sp.embed+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen scrolling="no" title="'+SPOTLIGHT_TITLE+'" style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>';
+  }else{
+    emb+='<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0d0d0d;padding:24px;text-align:center;">';
+    emb+='<div style="display:flex;gap:18px;">'+iYT()+iIG()+iX()+'</div>';
+    emb+='<p style="font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;line-height:1.8;">Set SPOTLIGHT_URL to a YouTube, Instagram Reel, or X post URL</p>';
+    emb+='</div>';
+  }
+  emb+='</div>';
+  emb+='<div style="display:flex;align-items:center;gap:8px;margin-top:12px;">'+ico+'<span style="font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;">Method Endeavors'+(sp.label?' / '+sp.label:'')+'</span></div>';
+  emb+='</div>';
+
+  var h='<div class="spotlight-section"><div class="spotlight-inner" style="grid-template-columns:'+cols+';">';
+  h+=portrait?emb+txt:txt+emb;
+  h+='</div></div>';
+  return h;
+}
+
+/* Trailer */
+function buildTrailerSection(){
+  var src='https://www.youtube.com/embed/'+YT_TRAILER+'?rel=0&modestbranding=1&color=white';
+  var h='<div class="trailer-section"><div class="trailer-inner">';
+  h+='<div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;">';
+  h+='<div><p class="eyebrow">Who We Are</p><div class="h-lg" style="margin-top:8px;">Method Endeavors<br><span style="color:var(--accent)">The Trailer</span></div></div>';
+  h+='<a href="https://www.youtube.com/channel/'+YT_CHANNEL+'" target="_blank" class="btn-outline" style="margin-bottom:4px;">'+iYT('currentColor')+'Subscribe on YouTube</a>';
+  h+='</div>';
+  h+='<div class="trailer-player-wrap"><div class="trailer-scanlines"></div>';
+  h+='<div class="trailer-label"><span>Method Endeavors - Official</span></div>';
+  h+='<div class="trailer-rec"><div class="blink"></div><span>Live</span></div>';
+  h+='<iframe src="'+src+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen title="Trailer"></iframe></div>';
+  h+='<div class="trailer-stats">';
+  h+='<div class="trailer-stat"><div class="trailer-stat-label">Experience</div><div class="trailer-stat-val">20+ Years</div></div>';
+  h+='<div class="trailer-stat"><div class="trailer-stat-label">Operations</div><div class="trailer-stat-val">60+ Countries</div></div>';
+  h+='<div class="trailer-stat"><div class="trailer-stat-label">Mission Success</div><div class="trailer-stat-val">100%</div></div>';
+  h+='</div></div></div>';
+  return h;
+}
+
+/* Social */
+function buildSocialSection(){
+  var reels=[
+    {thumb:IMG.f35,label:'Training',views:'12.4K'},
+    {thumb:IMG.f3,label:'Ops',views:'8.1K'},
+    {thumb:IMG.f0541,label:'Gear',views:'6.7K'},
+    {thumb:IMG.f16,label:'Field',views:'5.3K'}
+  ];
+  var h='<div class="social-section"><div class="social-inner">';
+  h+='<div class="social-header"><div><p class="eyebrow">Join the network</p><div class="h-lg" style="margin-top:8px;">Connect With<br><span style="color:var(--accent)">Method</span></div></div>';
+  h+='<p class="lead" style="max-width:360px;text-align:right;">Follow our operators in the field, gear drops and training content across all platforms.</p></div>';
+  h+='<div class="social-platforms">';
+  h+='<a href="https://www.instagram.com/methodendeavors/" target="_blank" class="social-card">';
+  h+='<div class="social-card-media"><img src="'+IMG.laser+'" alt="Instagram" onerror="'+ni()+'" />';
+  h+='<div class="social-card-media-overlay"></div>';
+  h+='<div class="social-card-platform">'+iIG()+'<span>Instagram</span></div>';
+  h+='<div class="social-card-play"><svg width="12" height="12" viewBox="0 0 24 24" fill="#080808"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>';
+  h+='<div class="social-card-body"><div class="social-card-tag">Latest Reel</div>';
+  h+='<div class="social-card-title">Conflict Series Drop - Behind the scenes gear walkthrough</div>';
+  h+='<div class="social-card-handle">@methodendeavors</div></div>';
+  h+='<div class="social-card-arrow">VIEW REEL</div></a>';
+  h+='<a href="https://www.youtube.com/channel/'+YT_CHANNEL+'" target="_blank" class="social-card">';
+  h+='<div class="social-card-media"><img src="'+IMG.f3+'" alt="YouTube" onerror="'+ni()+'" />';
+  h+='<div class="social-card-media-overlay"></div>';
+  h+='<div class="social-card-platform">'+iYT()+'<span>YouTube</span></div>';
+  h+='<div class="social-card-play"><svg width="12" height="12" viewBox="0 0 24 24" fill="#080808"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>';
+  h+='<div class="social-card-body"><div class="social-card-tag">Latest Video</div>';
+  h+='<div class="social-card-title">Training with Method - 3-Day Weapon Mastery Lab footage</div>';
+  h+='<div class="social-card-handle">Method Endeavors Channel</div></div>';
+  h+='<div class="social-card-arrow">WATCH NOW</div></a>';
+  h+='<a href="https://x.com/methodendeavors" target="_blank" class="social-card">';
+  h+='<div class="social-card-media"><img src="'+IMG.ops9+'" alt="X" onerror="'+ni()+'" />';
+  h+='<div class="social-card-media-overlay"></div>';
+  h+='<div class="social-card-platform">'+iX()+'<span>X (Twitter)</span></div></div>';
+  h+='<div class="social-card-body"><div class="social-card-tag">Latest Post</div>';
+  h+='<div class="social-card-title">Intel briefings, operational updates and drop announcements in real time</div>';
+  h+='<div class="social-card-handle">@MethodEndeavors</div></div>';
+  h+='<div class="social-card-arrow">FOLLOW</div></a>';
+  h+='</div>';
+  h+='<div style="margin-top:1px;">';
+  h+='<div style="background:var(--panel);border:1px solid var(--border);border-bottom:none;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">';
+  h+='<div style="display:flex;align-items:center;gap:10px;"><div style="width:3px;height:20px;background:linear-gradient(180deg,#833ab4,#fd1d1d,#fcb045)"></div>';
+  h+='<span style="font-family:var(--fu);font-size:13px;font-weight:700;color:var(--white);letter-spacing:1px;">Instagram Reels</span>';
+  h+='<div class="ig-live-badge"><div class="blink" style="width:5px;height:5px;background:#fff;"></div>Live Feed</div></div>';
+  h+='<a href="https://www.instagram.com/methodendeavors/" target="_blank" style="font-family:var(--fu);font-size:10px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;text-decoration:none;">View All Reels</a></div>';
+  h+='<div class="reel-grid">';
+  reels.forEach(function(r){
+    h+='<a href="https://www.instagram.com/methodendeavors/reels/" target="_blank" class="reel-thumb">';
+    h+='<img src="'+r.thumb+'" alt="Reel" onerror="'+ni()+'" />';
+    h+='<div class="reel-hover"><div class="reel-hover-icon">'+iIG()+'</div><span>View Reel</span></div>';
+    h+='<div class="reel-label"><span>'+r.label+' - '+r.views+'</span></div></a>';
+  });
+  h+='</div>';
+  h+='<div class="follow-cta"><div class="follow-cta-left">';
+  h+='<div class="follow-cta-avatar"><div class="follow-cta-avatar-inner"><img src="'+LOGO+'" alt="ME" style="filter:invert(1);padding:8px;" onerror="'+ni()+'" /></div></div>';
+  h+='<div class="follow-cta-text"><div class="handle">@methodendeavors</div><div class="sub">Follow for gear drops, training content and field footage</div></div></div>';
+  h+='<div style="display:flex;gap:10px;flex-wrap:wrap;">';
+  h+='<a href="https://www.instagram.com/methodendeavors/" target="_blank" class="btn-primary">'+iIG('#080808')+'Follow on Instagram</a>';
+  h+='<a href="https://www.youtube.com/channel/'+YT_CHANNEL+'" target="_blank" class="btn-outline">'+iYT('currentColor')+'Subscribe on YouTube</a>';
+  h+='</div></div></div>';
+  h+='</div></div>';
+  return h;
+}
+
+/* Shop */
+function renderShop(){
+  var grid=g('shop-grid');if(!grid)return;
+  var q=(g('shop-search')?g('shop-search').value:'').toLowerCase();
+  var filtered=SHOP_ITEMS.filter(function(s){return(activeCat==='All'||s.cat===activeCat)&&s.name.toLowerCase().indexOf(q)>=0;});
+  if(!filtered.length){grid.innerHTML='<p style="padding:28px;font-family:var(--fu);color:var(--muted);font-size:12px;">No items found.</p>';return;}
+  var h='';
+  filtered.forEach(function(s){
+    var st=sState(s.id);
+    var col=s.colors[st.colorIdx];
+    var img=col.images[st.imgIdx]||col.images[0];
+    var hasColors=s.colors.length>1;
+    h+='<div class="product-card" id="pcard-'+s.id+'">';
+    /* image viewer */
+    h+='<div style="position:relative;width:100%;height:220px;overflow:hidden;background:#111;cursor:zoom-in;" onclick="openLightbox('+s.id+','+st.imgIdx+')">';
+    h+='<img id="pimg-'+s.id+'" src="'+img+'" alt="'+s.name+'" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s;" onerror="'+ni()+'" />';
+    /* dot indicators for multiple images */
+    if(col.images.length>1){
+      h+='<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:2;">';
+      col.images.forEach(function(_,ii){
+        h+='<button onclick="event.stopPropagation();shopSetImg('+s.id+','+ii+')" style="width:7px;height:7px;border-radius:0;transform:rotate(45deg);border:none;background:'+(ii===st.imgIdx?'var(--accent)':'rgba(200,169,110,.3)')+';cursor:pointer;padding:0;transition:background .15s;"></button>';
+      });
+      h+='</div>';
+    }
+    /* left/right arrows */
+    if(col.images.length>1){
+      var prevIdx=(st.imgIdx-1+col.images.length)%col.images.length;
+      var nextIdx=(st.imgIdx+1)%col.images.length;
+      h+='<button onclick="event.stopPropagation();shopSetImg('+s.id+','+prevIdx+')" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(8,8,8,.7);border:1px solid var(--border);color:var(--accent);width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2;">&#8592;</button>';
+      h+='<button onclick="event.stopPropagation();shopSetImg('+s.id+','+nextIdx+')" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(8,8,8,.7);border:1px solid var(--border);color:var(--accent);width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2;">&#8594;</button>';
+    }
+    if(s.tag)h+='<div style="position:absolute;top:10px;left:10px;"><span class="tag '+(s.tag==='New Drop'?'red':'gold')+'">'+s.tag+'</span></div>';
+    h+='<div style="position:absolute;top:10px;right:10px;font-family:var(--fu);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);background:rgba(8,8,8,.8);border:1px solid rgba(200,169,110,.3);padding:3px 8px;cursor:zoom-in;">&#8599; View</div>';
+    h+='</div>';
+    /* body */
+    h+='<div class="product-body">';
+    h+='<span style="font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">'+s.cat+'</span>';
+    h+='<p style="font-family:var(--fu);font-weight:700;font-size:15px;color:var(--white);">'+s.name+'</p>';
+    h+='<p style="font-size:12px;color:var(--muted);line-height:1.6;">'+s.desc+'</p>';
+    /* color swatches */
+    if(hasColors){
+      h+='<div style="margin-top:2px;"><p style="font-family:var(--fu);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Color: <span id="clbl-'+s.id+'" style="color:var(--text);">'+col.name+'</span></p>';
+      h+='<div style="display:flex;gap:6px;">';
+      s.colors.forEach(function(c,ci){
+        var active=ci===st.colorIdx;
+        var extra=c.swatch==='#f0ece4'?'box-shadow:inset 0 0 0 1px #555;':'';
+        h+='<button onclick="shopSetColor('+s.id+','+ci+')" title="'+c.name+'" style="width:22px;height:22px;border-radius:50%;background:'+c.swatch+';border:'+(active?'2px solid var(--accent)':'2px solid var(--border2)')+';cursor:pointer;'+extra+'"></button>';
+      });
+      h+='</div></div>';
+    }else{
+      h+='<p style="font-family:var(--fu);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">Color: <span style="color:var(--text);">'+col.name+'</span></p>';
+    }
+    /* footer */
+    h+='<div class="product-footer"><span class="price">$'+s.price+'</span>';
+    h+='<button class="select-btn" data-toggle="'+s.id+'">Select</button></div>';
+    /* expand */
+    h+='<div class="product-expand" id="pexpand-'+s.id+'">';
+    if(s.sizes&&s.sizes.length){
+      h+='<p class="expand-label">Size</p><div class="size-grid">';
+      s.sizes.forEach(function(sz){
+        var so=s.soldOut&&s.soldOut.indexOf(sz)>=0;
+        h+='<button class="size-btn'+(so?' sold-out':'')+'" data-size="'+sz+'" data-item="'+s.id+'">'+sz+'</button>';
+      });
+      h+='</div><p class="size-error" id="size-err-'+s.id+'">Please select a size</p>';
+    }
+    h+='<p class="expand-label">Quantity</p>';
+    h+='<div class="qty-row"><button class="qty-btn" data-qchange="'+s.id+'" data-delta="-1">-</button><div class="qty-display" id="pqty-'+s.id+'">1</div><button class="qty-btn" data-qchange="'+s.id+'" data-delta="1">+</button></div>';
+    h+='<button class="add-to-cart-btn" data-additem="'+s.id+'">Add to Cart</button>';
+    h+='</div></div></div>';
+  });
+  grid.innerHTML=h;
+}
+
+/* Home */
+function capCard(t,d,p){return '<div class="cap-card" data-page="'+p+'"><span class="cap-icon">&#9670;</span><div class="cap-title">'+t+'</div><div class="cap-desc">'+d+'</div><div class="cap-arrow">LEARN MORE</div></div>';}
+function ibox(src,h){return '<div style="height:'+h+';overflow:hidden;"><img class="site-img" src="'+src+'" alt="" onerror="'+ni()+'" /></div>';}
+
+function buildHome(){
+  var h='';
+  h+='<div class="hero" style="height:600px;">';
+  h+='<img class="site-img" src="'+IMG.laser+'" alt="Hero" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="'+ni()+'" />';
+  h+='<div class="hero-overlay"></div><div class="corner-tl"></div><div class="corner-tr"></div>';
+  h+='<div class="hero-content"><p class="eyebrow">Service Disabled Veteran Owned</p>';
+  h+='<div class="h-display" style="margin-bottom:16px;max-width:800px;">Welcome to<br><span style="color:var(--accent)">Your Solution</span></div>';
+  h+='<p style="font-size:15px;line-height:1.8;color:rgba(240,236,228,.7);max-width:580px;margin-bottom:36px;">At Method Endeavors, your difficult or dangerous challenge is our pleasure. We thrive on adversity and make it our personal mission to keep your activity seamless, easy and safe.</p>';
+  h+='<div style="display:flex;gap:14px;flex-wrap:wrap;"><button class="btn-primary" data-page="methods">View Capabilities</button><button class="btn-outline" data-page="inquire">Submit Inquiry</button></div>';
+  h+='</div></div>';
+  var ticks=['Non-permissive environments','Specialized unit training','Low-visibility operations','Rapid global response','Diplomatic security','Special activities','Personnel recovery'];
+  h+='<div class="ticker">';
+  ticks.forEach(function(t){h+='<div class="ticker-item"><div class="ticker-dot"></div><span>'+t+'</span></div>';});
+  h+='</div><div class="divider-accent"></div>';
+  h+=buildTrailerSection();
+  h+='<div class="divider"></div>';
+  h+='<div class="section" style="position:relative;"><div class="sec-num">01</div><div class="grid-2">';
+  h+='<div><p class="eyebrow">We create options</p><div class="stripe-head"><div class="h-lg">All Capability.<br>No Limitation.</div></div>';
+  h+='<p class="lead" style="margin:20px 0 16px;">From protecting people and assets in non-permissive environments, to training of specialized units, low-visibility operations and rapid response globally, our capabilities are limitless.</p>';
+  h+='<p class="lead" style="margin-bottom:32px;">We gladly accept the challenge.</p>';
+  h+='<button class="btn-ghost" data-page="about">Learn about us</button></div>';
+  h+='<div style="position:relative;height:360px;overflow:hidden;border:1px solid var(--border);"><img class="site-img" src="'+IMG.ops9+'" alt="Ops" onerror="'+ni()+'" /></div>';
+  h+='</div></div><div class="divider"></div>';
+  h+='<div class="section" style="position:relative;"><div class="sec-num">02</div>';
+  h+='<p class="eyebrow" style="margin-bottom:28px;">Core capabilities</p>';
+  h+='<div class="b-grid" style="display:grid;grid-template-columns:repeat(4,1fr);">';
+  h+=capCard('Protection','PSD, diplomatic security, and close protection for principals worldwide.','methods');
+  h+=capCard('Training','Advanced training and advise/assist packages for military, LE and private sector.','training');
+  h+=capCard('Special Activities','Surveillance, tracking, deep cover and covert action where deniability is paramount.','methods');
+  h+=capCard('Global Logistics','Personnel, supplies, and equipment delivered anywhere on the planet, fast.','methods');
+  h+='</div></div><div class="divider"></div>';
+  h+=buildSpotlightSection();
+  h+='<div class="divider"></div>';
+  h+='<div class="section" style="position:relative;"><div class="sec-num">03</div>';
+  h+='<p class="eyebrow" style="margin-bottom:20px;">In the field</p>';
+  h+='<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:3px;margin-bottom:3px;">';
+  h+=ibox(IMG.f3,'320px')+ibox(IMG.f35,'320px')+ibox(IMG.f16,'320px');
+  h+='</div><div style="display:grid;grid-template-columns:1fr 1fr 2fr;gap:3px;">';
+  h+=ibox(IMG.f0541,'190px')+ibox(IMG.f31,'190px')+ibox(IMG.f13,'190px');
+  h+='</div></div><div class="divider-accent"></div>';
+  h+='<div class="stats-bar"><div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);">';
+  h+='<div class="stat-cell"><div class="stat-num">20+</div><div class="stat-lbl">Years of experience</div></div>';
+  h+='<div class="stat-cell"><div class="stat-num">60+</div><div class="stat-lbl">Countries operated in</div></div>';
+  h+='<div class="stat-cell" style="border-right:none;"><div class="stat-num">100%</div><div class="stat-lbl">Mission success rate</div></div>';
+  h+='</div></div>';
+  h+='<div class="divider"></div>';
+  h+=buildSocialSection();
+  h+='<div class="donate-banner"><div>';
+  h+='<p style="font-family:var(--fu);font-weight:700;font-size:14px;color:var(--white);margin-bottom:4px;letter-spacing:1px;text-transform:uppercase;">Outer Heaven Foundation</p>';
+  h+='<p style="font-size:13px;color:var(--muted);">Helping veterans, first responders and their families through adrenaline-fueled philanthropy.</p>';
+  h+='</div><a href="https://www.outerheavenfoundation.org" target="_blank" class="btn-outline">Donate</a></div>';
+  h+='<div class="newsletter"><p class="eyebrow" style="justify-content:center;margin-bottom:12px;">Intel briefings</p>';
+  h+='<div class="h-md" style="margin-bottom:8px;">Subscribe to the Method newsletter</div>';
+  h+='<p style="font-family:var(--fu);font-size:12px;color:var(--muted);margin-bottom:28px;">Exclusive drops, early access, and Method operational news.</p>';
+  h+='<div class="nl-form"><input type="email" id="nl-email" placeholder="your@email.com" /><button id="nl-submit-btn">Subscribe</button></div>';
+  h+='<p id="nl-confirm" style="font-family:var(--fu);font-size:11px;color:var(--accent);margin-top:12px;letter-spacing:1px;display:none;">Subscribed. Welcome to the network.</p>';
+  h+='</div>';
+  return h;
+}
+
+/* Shop page */
+function buildShop(){
+  var h='<div class="section">';
+  h+='<div class="section-head"><p class="eyebrow">Method Conflict Series</p><div class="h-lg" style="margin-bottom:8px;">Gear and Apparel</div><p class="lead">Limited drops. Purpose-built. No compromises.</p></div>';
+  h+='<div class="filter-bar"><div class="search-wrap"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="shop-search" placeholder="Search gear..." /></div>';
+  h+='<div style="display:flex;gap:6px;flex-wrap:wrap;"><button class="cat-btn active" data-cat="All">All</button><button class="cat-btn" data-cat="Apparel">Apparel</button><button class="cat-btn" data-cat="Outerwear">Outerwear</button></div></div>';
+  h+='<div id="shop-grid" class="b-grid" style="display:grid;grid-template-columns:repeat(3,1fr);"></div></div>';
+  return h;
+}
+
+/* Training */
+function buildTraining(){
+  var bk='';
+  TRAINING_ITEMS.forEach(function(t){
+    bk+='<div onclick="openBooking(\''+t.id+'\')" style="background:var(--card);border:1px solid var(--border);display:flex;align-items:stretch;cursor:pointer;margin-bottom:16px;">';
+    bk+='<div style="width:200px;flex-shrink:0;overflow:hidden;"><img src="'+t.img+'" alt="'+t.name+'" style="width:100%;height:100%;min-height:180px;object-fit:cover;display:block;" onerror="'+ni()+'" /></div>';
+    bk+='<div style="flex:1;padding:24px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;">';
+    bk+='<div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"><span class="tag gold">'+t.tag+'</span><span class="tag">'+t.level+'</span><span class="tag">'+t.dur+'</span></div>';
+    bk+='<p style="font-family:var(--fh);font-size:24px;color:var(--white);margin-bottom:8px;">'+t.name+'</p>';
+    bk+='<p style="font-size:13px;color:var(--muted);line-height:1.65;max-width:580px;">'+t.desc+'</p></div>';
+    bk+='<div style="display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);">';
+    bk+='<span style="font-family:var(--fh);font-size:28px;color:var(--accent);">'+(t.price?'$'+fmt(t.price):'Inquire for pricing')+'</span>';
+    bk+='<span style="font-family:var(--fu);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;">'+(t.price?'Book Now':'Request Info')+' &rarr;</span>';
+    bk+='</div></div></div>';
+  });
+  var ig='';
+  INFO_COURSES.forEach(function(c){
+    ig+='<div style="background:var(--card);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;">';
+    ig+='<img src="'+c.img+'" alt="'+c.name+'" style="width:100%;height:100px;object-fit:cover;display:block;" onerror="'+ni()+'" />';
+    ig+='<div style="padding:16px 20px;"><p style="font-family:var(--fu);font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px;">'+c.name+'</p>';
+    ig+='<p style="font-size:12px;color:var(--muted);line-height:1.6;">'+c.desc+'</p></div></div>';
+  });
+  var h='<div id="training-list-view">';
+  h+='<div class="hero" style="height:280px;"><img class="site-img" src="'+IMG.f35+'" alt="Training" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="'+ni()+'" />';
+  h+='<div class="hero-overlay"></div><div class="corner-tl"></div><div class="corner-tr"></div>';
+  h+='<div style="position:absolute;bottom:0;left:0;right:0;padding:36px 52px;"><p class="eyebrow">Advise and Assist</p><div class="h-xl" style="margin-top:8px;">Training<br><span style="color:var(--accent)">Programmes</span></div></div></div>';
+  h+='<div class="divider-accent"></div><div class="section">';
+  h+='<div class="section-head"><p class="eyebrow">Book a course</p><div class="h-lg" style="margin-bottom:6px;">Available for Booking</div><p class="lead">All training delivered by active and former Special Operations personnel.</p></div>';
+  h+=bk+'<div class="divider"></div><div style="padding-top:48px;">';
+  h+='<div class="section-head"><p class="eyebrow">Course catalogue</p><div class="h-lg" style="margin-bottom:6px;">Additional Disciplines</div><p class="lead">Available as part of custom packages. Contact us to build your programme.</p></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);overflow:hidden;">'+ig+'</div>';
+  h+='<div class="card-box" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:1px;border-top:none;">';
+  h+='<div><p style="font-family:var(--fu);font-weight:700;font-size:14px;color:var(--white);margin-bottom:4px;letter-spacing:1px;text-transform:uppercase;">Build a custom programme</p><p style="font-size:13px;color:var(--muted);">Multi-day, on-site and classified-environment training for units and agencies.</p></div>';
+  h+='<button class="btn-primary" data-page="inquire">Submit a Proposal</button></div></div></div></div>';
+  h+='<div id="training-book-view" style="display:none;"><div class="section" style="max-width:860px;">';
+  h+='<button onclick="showTrainingList()" style="background:none;border:none;cursor:pointer;font-family:var(--fu);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:32px;padding:0;">&lt;- Back</button>';
+  h+='<div id="booking-course-summary" style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:20px 24px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start;">';
+  h+='<div><p class="eyebrow" style="margin-bottom:14px;">Choose a date</p><div id="date-slots" style="display:flex;flex-direction:column;gap:6px;margin-bottom:32px;"></div>';
+  h+='<p class="eyebrow" style="margin-bottom:16px;">Your details</p><div style="display:flex;flex-direction:column;gap:14px;">';
+  h+='<div class="form-grid-2"><div class="form-group"><label class="form-label">First name</label><input class="form-input" type="text" id="bk-fname" placeholder="First" /></div><div class="form-group"><label class="form-label">Last name</label><input class="form-input" type="text" id="bk-lname" placeholder="Last" /></div></div>';
+  h+='<div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="bk-email" placeholder="your@email.com" /></div>';
+  h+='<div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" id="bk-phone" placeholder="+1 000 000 0000" /></div>';
+  h+='<div class="form-group"><label class="form-label">Organisation</label><input class="form-input" type="text" id="bk-org" placeholder="Agency, unit, or company" /></div>';
+  h+='<div class="form-group"><label class="form-label">Experience level</label><select class="form-select" id="bk-exp"><option value="">Select your background</option><option>No prior tactical training</option><option>Basic military or LE training</option><option>Advanced military or LE</option><option>Special Operations or SOF</option><option>Private sector or contractor</option></select></div>';
+  h+='<div class="form-group"><label class="form-label">Attendees</label><select class="form-select" id="bk-attendees"><option>1 individual</option><option>2 to 4</option><option>5 to 10</option><option>11 to 20</option><option>20 plus</option></select></div>';
+  h+='<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" rows="3" id="bk-notes" placeholder="Medical conditions, equipment needs, clearance level, etc."></textarea></div>';
+  h+='</div></div>';
+  h+='<div style="position:sticky;top:80px;"><p class="eyebrow" style="margin-bottom:14px;">Booking summary</p>';
+  h+='<div style="background:var(--card);border:1px solid var(--border);overflow:hidden;">';
+  h+='<div id="booking-highlights" style="padding:18px 20px;border-bottom:1px solid var(--border);"></div>';
+  h+='<div id="booking-summary-detail" style="padding:18px 20px;border-bottom:1px solid var(--border);"></div>';
+  h+='<div style="padding:16px 20px;background:var(--panel);">';
+  h+='<div id="deposit-row" style="display:flex;justify-content:space-between;margin-bottom:8px;"></div>';
+  h+='<div id="balance-row" style="display:flex;justify-content:space-between;margin-bottom:20px;"></div>';
+  h+='<p id="booking-error" style="font-family:var(--fu);font-size:11px;color:#e06060;margin-bottom:12px;display:none;"></p>';
+  h+='<button class="btn-primary" style="width:100%;justify-content:center;" id="booking-submit-btn">Request Booking</button>';
+  h+='<p style="font-family:var(--fu);font-size:10px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5;">A Method team member will confirm within 24 hours.</p>';
+  h+='</div></div></div></div></div></div>';
+  h+='<div id="training-confirm-view" style="display:none;"><div class="section-sm" style="text-align:center;padding-top:72px;padding-bottom:72px;">';
+  h+='<div style="width:64px;height:64px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:rgba(200,169,110,.1);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>';
+  h+='<div class="h-lg" style="margin-bottom:12px;">Booking Request<br><span style="color:var(--accent)">Submitted</span></div>';
+  h+='<p class="lead" style="max-width:480px;margin:0 auto 8px;">Your request has been received. A Method operator will contact you within 24 hours.</p>';
+  h+='<p style="font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:36px;">All communications are confidential.</p>';
+  h+='<div id="confirm-summary" style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:22px 28px;text-align:left;max-width:440px;margin:0 auto 36px;"></div>';
+  h+='<button class="btn-outline" onclick="showTrainingList()">Browse more courses</button>';
+  h+='</div></div>';
+  return h;
+}
+
+function buildMethods(){
+  var h='<div class="hero" style="height:400px;"><img class="site-img" src="'+IMG.f3+'" alt="Methods" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="'+ni()+'" />';
+  h+='<div class="hero-overlay"></div><div class="corner-tl"></div><div class="corner-tr"></div>';
+  h+='<div style="position:absolute;bottom:0;left:0;right:0;padding:40px 52px;"><p class="eyebrow">Method to the madness</p><div class="h-xl" style="margin-top:10px;">All Capability.<br><span style="color:var(--accent)">No Limitation.</span></div></div></div>';
+  h+='<div class="divider-accent"></div><div class="section" style="max-width:1100px;">';
+  h+='<div class="grid-2" style="margin-bottom:56px;position:relative;"><div class="sec-num" style="font-size:60px;">01</div>';
+  h+='<div><p class="eyebrow">Global response</p><div class="stripe-head"><div class="h-md" style="margin-bottom:18px;">Rescue, Recovery and Evacuation</div></div>';
+  h+='<p class="lead" style="margin-bottom:14px;">Method Endeavors conducts rescue and recovery operations in conflict zones globally. We specialize in personnel recovery and extraction.</p>';
+  h+='<div class="info-panel" style="margin-top:20px;"><div class="info-panel-label">Deployment readiness</div><p style="font-family:var(--fu);font-size:13px;color:var(--dim);">Global Response Staff deploys anywhere in the world within <span style="color:var(--accent);font-weight:700;">18 hours</span>.</p></div></div>';
+  h+='<div class="flex-col">'+ibox(IMG.f35,'200px')+ibox(IMG.f16,'150px')+'</div></div>';
+  h+='<div class="divider"></div>';
+  h+='<div class="grid-2" style="padding:52px 0;position:relative;"><div class="sec-num" style="font-size:60px;">02</div>';
+  h+='<div class="flex-col">'+ibox(IMG.f0541,'220px')+ibox(IMG.f31,'140px')+'</div>';
+  h+='<div><p class="eyebrow">Advise and assist</p><div class="stripe-head"><div class="h-md" style="margin-bottom:18px;">Advanced Training</div></div>';
+  h+='<p class="lead" style="margin-bottom:20px;">From military units to law enforcement and the private sector, we advise the highest trained organizations to be better and more capable.</p>';
+  h+='<div class="info-panel"><div class="info-panel-label">Special activities</div><p style="font-family:var(--fu);font-size:13px;color:var(--dim);">We operate where deniability is paramount, from basic surveillance to full-scale covert action.</p></div></div></div>';
+  h+='<div class="divider"></div>';
+  h+='<div style="padding:52px 0 0;position:relative;"><div class="sec-num" style="font-size:60px;">03</div>';
+  h+='<p class="eyebrow" style="margin-bottom:8px;">Global logistics</p>';
+  h+='<div class="stripe-head" style="margin-bottom:12px;"><div class="h-md">Personnel and Supply. Anywhere. Fast.</div></div>';
+  h+='<p class="lead" style="margin-bottom:36px;max-width:640px;">Our staff operate ground vehicles, maritime craft and aircraft. Logistical relationships ensure safety and success worldwide.</p>';
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);overflow:hidden;">';
+  h+='<div class="domain-card"><div class="domain-header"><span class="domain-icon">~</span><span class="tag gold">SEA</span></div><div class="h-sm" style="margin-bottom:8px;">From the sea</div><p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">Combat divers operating various craft across the waterways of the world.</p><img class="domain-img" src="'+IMG.ops9+'" alt="Sea" onerror="'+ni()+'" /></div>';
+  h+='<div class="domain-card"><div class="domain-header"><span class="domain-icon">o</span><span class="tag gold">SAND</span></div><div class="h-sm" style="margin-bottom:8px;">Over land</div><p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">Ground Branch employs expert personnel for all terrain operations.</p><img class="domain-img" src="'+IMG.f3+'" alt="Sand" onerror="'+ni()+'" /></div>';
+  h+='<div class="domain-card" style="border-right:none;"><div class="domain-header"><span class="domain-icon">^</span><span class="tag gold">SKY</span></div><div class="h-sm" style="margin-bottom:8px;">From above</div><p style="font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;">Sky Branch delivers logistics, personnel drops, aerial observation and UAS capabilities.</p><img class="domain-img" src="'+IMG.f0541+'" alt="Sky" onerror="'+ni()+'" /></div>';
+  h+='</div></div></div>';
+  return h;
+}
+
+function buildAbout(){
+  var exp=['Protective security detail','Surveillance operations','Special activities','Counterterrorism','Advanced unit training','Diplomatic security','Personnel recovery','Global logistics'];
+  var h='<div class="hero" style="height:380px;"><img class="site-img" src="'+IMG.f16+'" alt="About" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="'+ni()+'" />';
+  h+='<div class="hero-overlay"></div><div class="corner-tl"></div><div class="corner-tr"></div>';
+  h+='<div style="position:absolute;bottom:0;left:0;right:0;padding:40px 52px;"><p class="eyebrow">Service Disabled Veteran Owned</p><div class="h-xl" style="margin-top:10px;">About Method<br><span style="color:var(--accent)">Endeavors</span></div></div></div>';
+  h+='<div class="divider-accent"></div><div class="section" style="max-width:1060px;"><div class="grid-2" style="margin-bottom:52px;">';
+  h+='<div><p class="eyebrow">We create options</p>';
+  h+='<p class="lead" style="margin-bottom:16px;">Method Endeavors provides high threat protection to diplomats, dignitaries and high net worth individuals around the globe. We are a Service Disabled Veteran Owned Small Business specializing in real world consultation, threat mitigation and advanced training of specialized units.</p>';
+  h+='<p class="lead" style="margin-bottom:16px;">The company is comprised of current and former members of Special Operations including Navy SEALs, Army Rangers, Green Berets, Marine Special Operations, Intelligence community and support staff.</p>';
+  h+='<p class="lead">Offices in South America, the US, Africa and Asia. Over two decades of experience in every major conflict since the Global War On Terror.</p></div>';
+  h+='<div class="flex-col">'+ibox(IMG.f31,'220px')+ibox(IMG.f13,'140px')+'</div></div>';
+  h+='<div class="divider"></div><div style="padding:40px 0;"><p class="eyebrow" style="margin-bottom:24px;">Our expertise</p>';
+  h+='<div style="display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);overflow:hidden;">';
+  exp.forEach(function(e){h+='<div class="exp-cell"><div class="exp-dot"></div><p>'+e+'</p></div>';});
+  h+='</div></div><div class="divider"></div>';
+  h+='<div style="padding:40px 0;"><p class="eyebrow" style="margin-bottom:20px;">Global presence</p>';
+  h+='<div style="display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);overflow:hidden;">';
+  ['Americas','Africa','Asia','Middle East'].forEach(function(r,i){
+    h+='<div class="presence-cell"'+(i===3?' style="border-right:none;"':'')+"><div class='h-sm' style='margin-bottom:4px;'>"+r+"</div><div class='small'>Active operations</div></div>";
+  });
+  h+='</div></div><div class="divider"></div>';
+  h+='<div style="padding:40px 0 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">';
+  h+='<div><div class="h-sm" style="margin-bottom:4px;">Our experience is unrivaled. Our craft is unmatched.</div><p class="small">Above all, we create options.</p></div>';
+  h+='<button class="btn-primary" data-page="inquire">Work With Us</button></div></div>';
+  return h;
+}
+
+function buildInquire(){
+  var h='<div class="hero" style="height:300px;"><img class="site-img" src="'+IMG.f35+'" alt="Inquire" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="'+ni()+'" />';
+  h+='<div class="hero-overlay"></div><div class="corner-tl"></div><div class="corner-tr"></div>';
+  h+='<div style="position:absolute;bottom:0;left:0;right:0;padding:36px 52px;"><p class="eyebrow">Consultation, operations and training</p><div class="h-lg" style="margin-top:10px;">Inquire With<br><span style="color:var(--accent)">Method Staff</span></div></div></div>';
+  h+='<div class="divider-accent"></div><div class="section-sm">';
+  h+='<p class="lead" style="margin-bottom:36px;">Contact Method staff regarding questions, orders, training and specific needs. All inquiries are handled with full confidentiality.</p>';
+  h+='<div id="inquire-success" class="success-box" style="display:none;">';
+  h+='<div style="width:52px;height:52px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:rgba(200,169,110,.1);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>';
+  h+='<div class="h-md" style="margin-bottom:10px;">Message Received</div>';
+  h+='<p class="lead" style="margin-bottom:28px;">A member of our team will be in contact shortly.</p>';
+  h+='<button class="btn-outline" id="inquire-again-btn">Send Another</button></div>';
+  h+='<div id="inquire-form" class="form-box"><div style="display:flex;flex-direction:column;gap:20px;">';
+  h+='<div class="form-grid-2"><div class="form-group"><label class="form-label">Name</label><input class="form-input" type="text" placeholder="Full name" /></div><div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@email.com" /></div></div>';
+  h+='<div class="form-group"><label class="form-label">Organisation</label><input class="form-input" type="text" placeholder="Unit, agency, or company" /></div>';
+  h+='<div class="form-group"><label class="form-label">Nature of inquiry</label><select class="form-select"><option>Protective security or PSD</option><option>Training and advise assist</option><option>Special activities</option><option>Personnel recovery or extraction</option><option>Global logistics</option><option>General inquiry</option></select></div>';
+  h+='<div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" rows="5" placeholder="Describe your situation, requirements, timeline and any relevant details."></textarea></div>';
+  h+='<button class="btn-primary" style="width:100%;justify-content:center;" id="inq-submit-btn">Send Secure Message</button>';
+  h+='</div></div></div>';
+  return h;
+}
+
+/* Root builder */
+function buildRoot(){
+  var h='';
+  h+='<div class="alert-bar"><div class="blink"></div><span>Conflict Series Drop Live Now</span><span style="color:#884444">|</span><span>Global Response Standby Active</span><div class="blink"></div></div>';
+  h+='<nav>';
+  h+='<div class="nav-brand"><div class="nav-logo-wrap"><img src="'+LOGO+'" alt="ME" /></div><div class="nav-brand-text"><span class="t1">Method Endeavors</span><span class="t2">We Create Options</span></div></div>';
+  h+='<div class="nav-links"><button class="nav-btn active" data-page="home">Home</button><button class="nav-btn" data-page="shop">Shop</button><button class="nav-btn" data-page="training">Training</button><button class="nav-btn" data-page="methods">Methods</button><button class="nav-btn" data-page="about">About</button><button class="nav-btn" data-page="inquire">Inquire</button></div>';
+  h+='<div class="nav-right" style="position:relative;">';
+  h+='<div id="nav-search-wrap" style="position:relative;display:flex;align-items:center;"><button class="search-icon-btn" id="search-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>';
+  h+='<div id="nav-search-box"><input type="text" id="nav-search-input" placeholder="Search..." /><button id="nav-search-clear">x</button></div></div>';
+  h+='<div id="nav-search-results"></div>';
+  h+='<button class="profile-btn" id="profile-nav-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span id="profile-nav-label">Sign In</span></button>';
+  h+='<button class="cart-btn" id="cart-toggle-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span id="cart-label">Cart</span></button>';
+  h+='</div></nav>';
+  h+='<div id="page-home" class="page active">'+buildHome()+'</div>';
+  h+='<div id="page-shop" class="page">'+buildShop()+'</div>';
+  h+='<div id="page-training" class="page">'+buildTraining()+'</div>';
+  h+='<div id="page-methods" class="page">'+buildMethods()+'</div>';
+  h+='<div id="page-about" class="page">'+buildAbout()+'</div>';
+  h+='<div id="page-inquire" class="page">'+buildInquire()+'</div>';
+  h+='<footer><div><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><img src="'+LOGO+'" alt="ME" style="height:22px;filter:invert(1);opacity:.4;" /><span style="font-family:var(--fh);font-size:14px;color:var(--muted);letter-spacing:2px;">METHOD ENDEAVORS</span></div><span class="footer-copy">2026 Method Endeavors. All rights reserved. SDVOSB.</span></div><div class="footer-social"><a href="https://www.instagram.com/methodendeavors/" target="_blank">Instagram</a><a href="https://www.youtube.com/channel/'+YT_CHANNEL+'" target="_blank">YouTube</a><a href="https://x.com/methodendeavors" target="_blank">X</a><a href="https://www.outerheavenfoundation.org" target="_blank">Foundation</a></div></footer>';
+  h+='<div id="cart-overlay" class="cart-overlay"><div class="cart-backdrop" id="cart-backdrop"></div><div class="cart-panel"><div class="cart-header"><span class="cart-title" id="cart-heading">Cart</span><button class="cart-close" id="cart-close-btn">X</button></div><div id="cart-body"></div></div></div>';
+  h+='<div id="auth-modal" class="modal-overlay"><div class="modal-box"><button class="modal-close" id="auth-modal-close">X</button>';
+  h+='<div style="text-align:center;margin-bottom:20px;"><img src="'+LOGO+'" alt="ME" style="height:36px;filter:invert(1);opacity:.7;margin-bottom:10px;" /><br><span style="font-family:var(--fh);font-size:20px;color:var(--white);letter-spacing:2px;">Member Access</span></div>';
+  h+='<div class="modal-tabs"><button class="modal-tab active" id="tab-signin-btn">Sign In</button><button class="modal-tab" id="tab-signup-btn">Create Account</button></div>';
+  h+='<div id="tab-signin" class="modal-section active"><div style="display:flex;flex-direction:column;gap:14px;"><div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="signin-email" placeholder="your@email.com" /></div><div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="signin-pass" placeholder="Password" /></div><p id="signin-error" style="font-family:var(--fu);font-size:11px;color:#e06060;display:none;"></p><button class="btn-primary" style="width:100%;justify-content:center;" id="signin-submit-btn">Sign In</button></div></div>';
+  h+='<div id="tab-signup" class="modal-section"><div style="display:flex;flex-direction:column;gap:14px;"><div class="form-group"><label class="form-label">Full name</label><input class="form-input" type="text" id="signup-name" placeholder="Your name" /></div><div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="signup-email" placeholder="your@email.com" /></div><div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="signup-pass" placeholder="Min 6 characters" /></div><p id="signup-error" style="font-family:var(--fu);font-size:11px;color:#e06060;display:none;"></p><button class="btn-primary" style="width:100%;justify-content:center;" id="signup-submit-btn">Create Account</button></div></div></div></div>';
+  h+='<div id="profile-panel" class="profile-panel">';
+  /* ... profile panel content ... */
+  h+='<div class="profile-panel-header"><span class="profile-panel-title">Profile</span><button class="panel-close" id="profile-close-btn">X</button></div>';
+  h+='<div class="profile-avatar" id="profile-initials">?</div><div class="profile-user-name" id="profile-name">-</div><div class="profile-user-email" id="profile-email">-</div>';
+  h+='<div style="margin-bottom:20px;"><p class="profile-section-label">Newsletter</p><div style="display:flex;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--border);padding:12px 14px;"><span style="font-family:var(--fu);font-size:12px;color:var(--dim);">Method intel briefings</span><span id="sub-status" style="font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Not subscribed</span></div>';
+  h+='<button id="sub-toggle-btn" style="width:100%;margin-top:6px;background:transparent;border:1px solid var(--border);padding:8px;font-family:var(--fu);font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:var(--muted);">Subscribe to Newsletter</button></div>';
+  h+='<div style="flex:1;"><p class="profile-section-label">Purchase history</p><div id="purchase-history"></div></div>';
+  h+='<div style="padding-top:20px;border-top:1px solid var(--border);margin-top:20px;"><button class="btn-outline" style="width:100%;justify-content:center;" id="logout-btn">Sign Out</button></div></div>';
+  /* Lightbox */
+  h+='<div id="lightbox" class="lightbox">';
+  h+='<button class="lightbox-close" id="lb-close">X</button>';
+  h+='<img id="lb-img" class="lightbox-img" src="" alt="Product" />';
+  h+='<div class="lightbox-nav">';
+  h+='<button class="lightbox-arrow" id="lb-prev">&#8592;</button>';
+  h+='<div class="lightbox-dots" id="lb-dots"></div>';
+  h+='<button class="lightbox-arrow" id="lb-next">&#8594;</button>';
+  h+='</div>';
+  h+='<div class="lightbox-caption" id="lb-caption"></div>';
+  h+='</div>';
+  return h;
+}
+
+/* Lightbox */
+var lbImages=[],lbIdx=0;
+function openLightbox(itemId,startIdx){
+  var s=null;SHOP_ITEMS.forEach(function(x){if(x.id===itemId)s=x;});
+  if(!s)return;
+  var st=sState(itemId);
+  var col=s.colors[st.colorIdx];
+  lbImages=col.images;
+  lbIdx=startIdx||0;
+  renderLightbox(s.name);
+  g('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  g('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+function renderLightbox(name){
+  var img=g('lb-img'),dots=g('lb-dots'),cap=g('lb-caption');
+  img.src=lbImages[lbIdx];
+  cap.textContent=(name?name+' — ':'')+'Image '+(lbIdx+1)+' of '+lbImages.length;
+  dots.innerHTML='';
+  lbImages.forEach(function(_,i){
+    var d=document.createElement('button');
+    d.className='lightbox-dot'+(i===lbIdx?' active':'');
+    d.onclick=function(){lbIdx=i;renderLightbox(name);};
+    dots.appendChild(d);
+  });
+  /* hide arrows if only one image */
+  g('lb-prev').style.display=lbImages.length>1?'flex':'none';
+  g('lb-next').style.display=lbImages.length>1?'flex':'none';
+}
+function lbPrev(){lbIdx=(lbIdx-1+lbImages.length)%lbImages.length;renderLightbox();}
+function lbNext(){lbIdx=(lbIdx+1)%lbImages.length;renderLightbox();}
+
+/* Lightbox event listeners — attached after DOM ready */
+function initLightbox(){
+  var lb=g('lightbox');if(!lb)return;
+  g('lb-close').onclick=closeLightbox;
+  g('lb-prev').onclick=lbPrev;
+  g('lb-next').onclick=lbNext;
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLightbox();});
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='ArrowLeft')lbPrev();
+    if(e.key==='ArrowRight')lbNext();
+    if(e.key==='Escape')closeLightbox();
+  });
+}
+function addToCart(cId,name,price,qty){var ex=null;cart.forEach(function(i){if(i.cartId===cId)ex=i;});if(ex){ex.qty+=qty;}else{cart.push({cartId:cId,name:name,price:price,qty:qty});}updateCartUI();}
+function removeFromCart(cId){cart=cart.filter(function(i){return i.cartId!==cId;});updateCartUI();}
+function changeCartQty(cId,delta){var item=null;cart.forEach(function(i){if(i.cartId===cId)item=i;});if(!item)return;item.qty+=delta;if(item.qty<=0)removeFromCart(cId);else updateCartUI();}
+function updateCartUI(){var count=cart.reduce(function(s,i){return s+i.qty;},0);g('cart-label').innerHTML=count>0?'<span class="cart-badge">'+count+'</span>':'Cart';g('cart-heading').textContent=count>0?'CART ('+count+')':'CART';renderCartBody();}
+function renderCartBody(){
+  var body=g('cart-body');
+  if(!cart.length){body.innerHTML='<p class="cart-empty">Your cart is empty.</p>';return;}
+  var total=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  var h='<div class="cart-items">';
+  cart.forEach(function(item){
+    h+='<div class="cart-item"><div class="cart-item-top"><span class="cart-item-name">'+item.name+'</span><button class="cart-item-remove" data-cartremove="'+item.cartId+'">Remove</button></div>';
+    h+='<div class="cart-item-bottom"><div class="cqty-wrap"><button class="cqty-btn" data-cartqty="'+item.cartId+'" data-delta="-1">-</button><div class="cqty-num">'+item.qty+'</div><button class="cqty-btn" data-cartqty="'+item.cartId+'" data-delta="1">+</button></div><span class="cart-item-price">$'+fmt(item.price*item.qty)+'</span></div></div>';
+  });
+  h+='</div><div class="cart-footer"><div class="cart-total-row"><span class="cart-total-lbl">Subtotal</span><span class="cart-total-val">$'+fmt(total)+'</span></div><button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button></div>';
+  body.innerHTML=h;
+}
+function toggleCart(){g('cart-overlay').classList.toggle('open');renderCartBody();}
+
+/* Auth */
+function openAuthModal(){g('auth-modal').classList.add('open');}
+function closeAuthModal(){g('auth-modal').classList.remove('open');}
+function signIn(){
+  var email=g('signin-email').value.trim(),pass=g('signin-pass').value,err=g('signin-error');
+  if(!email||!pass){err.textContent='Please enter email and password.';err.style.display='block';return;}
+  if(!accounts[email]){err.textContent='No account found. Please create one.';err.style.display='block';return;}
+  if(accounts[email].password!==pass){err.textContent='Incorrect password.';err.style.display='block';return;}
+  err.style.display='none';currentUser=accounts[email];closeAuthModal();updateNavProfile();openProfilePanel();
+}
+function signUp(){
+  var name=g('signup-name').value.trim(),email=g('signup-email').value.trim(),pass=g('signup-pass').value,err=g('signup-error');
+  if(!name||!email||!pass){err.textContent='All fields are required.';err.style.display='block';return;}
+  if(pass.length<6){err.textContent='Password must be at least 6 characters.';err.style.display='block';return;}
+  if(accounts[email]){err.textContent='An account with this email already exists.';err.style.display='block';return;}
+  err.style.display='none';accounts[email]={email:email,password:pass,name:name,subscribed:false,history:[]};currentUser=accounts[email];closeAuthModal();updateNavProfile();openProfilePanel();
+}
+function logout(){currentUser=null;closeProfilePanel();g('profile-nav-label').textContent='Sign In';g('profile-nav-btn').style.cssText='';}
+function updateNavProfile(){if(!currentUser)return;g('profile-nav-label').textContent=currentUser.name.split(' ')[0];g('profile-nav-btn').style.borderColor='var(--accent)';g('profile-nav-btn').style.color='var(--accent)';}
+function openProfilePanel(){
+  if(!currentUser){openAuthModal();return;}
+  var initials=currentUser.name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2);
+  g('profile-initials').textContent=initials;g('profile-name').textContent=currentUser.name;g('profile-email').textContent=currentUser.email;
+  updateSubStatus();renderPurchaseHistory();g('profile-panel').classList.add('open');
+}
+function closeProfilePanel(){g('profile-panel').classList.remove('open');}
+function updateSubStatus(){
+  if(!currentUser)return;
+  var s=g('sub-status'),b=g('sub-toggle-btn');
+  if(currentUser.subscribed){s.textContent='Subscribed';s.style.color='var(--accent)';b.textContent='Unsubscribe';b.style.color='#e06060';}
+  else{s.textContent='Not subscribed';s.style.color='var(--muted)';b.textContent='Subscribe to Newsletter';b.style.color='var(--muted)';}
+}
+function toggleSubscription(){if(!currentUser)return;currentUser.subscribed=!currentUser.subscribed;updateSubStatus();}
+function renderPurchaseHistory(){
+  var div=g('purchase-history');
+  if(!currentUser.history.length){div.innerHTML='<p style="font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">No purchases yet.</p>';return;}
+  div.innerHTML=currentUser.history.map(function(h){return '<div class="history-item"><div class="history-item-name">'+h.name+'</div><div class="history-item-meta">'+h.type+' - $'+fmt(h.price)+' - Qty '+h.qty+' - '+h.date+'</div></div>';}).join('');
+}
+function handleCheckout(){
+  if(!currentUser){toggleCart();openAuthModal();return;}
+  var now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  cart.forEach(function(item){currentUser.history.unshift({name:item.name,type:'Purchase',price:item.price,qty:item.qty,date:now});});
+  cart=[];updateCartUI();toggleCart();alert('Order confirmed! View your purchase history in your profile.');
+}
+
+/* Booking */
+function openBooking(id){
+  var course=null;TRAINING_ITEMS.forEach(function(t){if(t.id===id)course=t;});
+  if(!course)return;
+  if(!course.price&&id!=='t3'){showPage('inquire');return;}
+  bookingCourse=course;bookingDate=null;
+  g('training-list-view').style.display='none';g('training-book-view').style.display='block';g('training-confirm-view').style.display='none';
+  var cs=g('booking-course-summary');
+  cs.innerHTML='<div><p style="font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Selected course</p><p style="font-family:var(--fh);font-size:20px;color:var(--white);">'+course.name+'</p><p style="font-size:12px;color:var(--muted);margin-top:3px;">'+course.dur+' - '+course.level+'</p></div><div style="text-align:right;flex-shrink:0;"><p style="font-family:var(--fh);font-size:28px;color:var(--accent);">'+(course.price?'$'+fmt(course.price):'Custom pricing')+'</p><p style="font-family:var(--fu);font-size:10px;color:var(--muted);">per person</p></div>';
+  var ds=g('date-slots');ds.innerHTML='';
+  course.dates.forEach(function(d,i){
+    var row=document.createElement('div');row.className='date-slot';row.dataset.date=d;
+    row.innerHTML='<div style="display:flex;align-items:center;gap:12px;"><span style="font-family:var(--fu);font-size:13px;color:var(--text);font-weight:600;">'+d+'</span>'+(i===0&&d!=='By appointment only'?'<span style="font-family:var(--fu);font-size:9px;color:var(--accent);letter-spacing:1.5px;border:1px solid rgba(200,169,110,.3);padding:2px 6px;">NEXT SESSION</span>':'')+'</div><span class="slot-label" style="font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Select</span>';
+    row.addEventListener('click',function(){selectDate(d,row);});ds.appendChild(row);
+  });
+  var bh=g('booking-highlights');
+  bh.innerHTML='<p style="font-family:var(--fu);font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">What is included</p>';
+  course.highlights.forEach(function(hl){bh.innerHTML+='<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;"><span style="color:var(--accent);font-size:10px;margin-top:2px;flex-shrink:0;">+</span><span style="font-family:var(--fu);font-size:12px;color:var(--dim);">'+hl+'</span></div>';});
+  var deposit=course.price?Math.round(course.price*0.25):null;
+  var balance=course.price?course.price-deposit:null;
+  g('booking-summary-detail').innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:12px;color:var(--dim);">Duration</span><span style="font-family:var(--fu);font-size:12px;color:var(--text);">'+course.dur+'</span></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:12px;color:var(--dim);">Level</span><span style="font-family:var(--fu);font-size:12px;color:var(--text);">'+course.level+'</span></div><div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);"><span style="font-size:12px;color:var(--dim);">Total</span><span style="font-family:var(--fh);font-size:20px;color:var(--white);">'+(course.price?'$'+fmt(course.price):'TBD')+'</span></div>';
+  g('deposit-row').innerHTML=course.price?'<span style="font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Deposit 25%</span><span style="font-family:var(--fh);font-size:20px;color:var(--accent);">$'+fmt(deposit)+'</span>':'<span style="font-family:var(--fu);font-size:11px;color:var(--muted);">Pricing confirmed on booking</span>';
+  g('balance-row').innerHTML=course.price?'<span style="font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Balance due on arrival</span><span style="font-family:var(--fh);font-size:20px;color:var(--dim);">$'+fmt(balance)+'</span>':'';
+  window.scrollTo(0,0);
+}
+function selectDate(date,elRef){
+  bookingDate=date;
+  document.querySelectorAll('.date-slot').forEach(function(s){s.style.borderColor='var(--border)';s.style.background='var(--panel)';var lbl=s.querySelector('.slot-label');if(lbl){lbl.textContent='Select';lbl.style.color='var(--muted)';}});
+  elRef.style.borderColor='var(--accent)';elRef.style.background='rgba(200,169,110,.06)';
+  var lbl=elRef.querySelector('.slot-label');if(lbl){lbl.textContent='Selected';lbl.style.color='var(--accent)';}
+}
+function showTrainingList(){g('training-list-view').style.display='block';g('training-book-view').style.display='none';g('training-confirm-view').style.display='none';bookingCourse=null;bookingDate=null;window.scrollTo(0,0);}
+function submitBooking(){
+  var errEl=g('booking-error');
+  var fname=g('bk-fname')?g('bk-fname').value.trim():'';
+  var lname=g('bk-lname')?g('bk-lname').value.trim():'';
+  var email=g('bk-email')?g('bk-email').value.trim():'';
+  var exp=g('bk-exp')?g('bk-exp').value:'';
+  if(!fname||!lname){errEl.textContent='Please enter your full name.';errEl.style.display='block';return;}
+  if(!email){errEl.textContent='Please enter your email.';errEl.style.display='block';return;}
+  if(!bookingDate){errEl.textContent='Please select a training date.';errEl.style.display='block';return;}
+  if(!exp){errEl.textContent='Please select your experience level.';errEl.style.display='block';return;}
+  errEl.style.display='none';
+  if(currentUser){var now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});currentUser.history.unshift({name:bookingCourse.name,type:'Training',price:bookingCourse.price||0,qty:1,date:now});}
+  g('training-list-view').style.display='none';g('training-book-view').style.display='none';g('training-confirm-view').style.display='block';
+  g('confirm-summary').innerHTML='<div style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:var(--muted);">Course</span><span style="font-family:var(--fu);font-size:12px;color:var(--text);font-weight:600;">'+bookingCourse.name+'</span></div><div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:var(--muted);">Date</span><span style="font-family:var(--fu);font-size:12px;color:var(--accent);">'+bookingDate+'</span></div><div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:var(--muted);">Name</span><span style="font-family:var(--fu);font-size:12px;color:var(--text);">'+fname+' '+lname+'</span></div><div style="display:flex;justify-content:space-between;"><span style="font-size:12px;color:var(--muted);">Email</span><span style="font-family:var(--fu);font-size:12px;color:var(--text);">'+email+'</span></div><div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border);"><span style="font-size:12px;color:var(--muted);">Total</span><span style="font-family:var(--fh);font-size:18px;color:var(--accent);">'+(bookingCourse.price?'$'+fmt(bookingCourse.price):'TBD')+'</span></div></div>';
+  window.scrollTo(0,0);
+}
+
+/* Navigation */
+function showPage(pageId){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var target=g('page-'+pageId);if(target)target.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.toggle('active',b.dataset.page===pageId);});
+  if(pageId==='shop')renderShop();
+  window.scrollTo(0,0);
+}
+
+function initSearch(){
+  var iconBtn=g('search-icon-btn'),searchBox=g('nav-search-box'),input=g('nav-search-input'),clearBtn=g('nav-search-clear'),results=g('nav-search-results');
+  if(!iconBtn)return;
+  var open=false;
+  function openSearch(){open=true;searchBox.style.display='flex';results.style.display='none';setTimeout(function(){input.focus();},50);}
+  function closeSearch(){open=false;searchBox.style.display='none';results.style.display='none';input.value='';}
+  iconBtn.addEventListener('click',function(e){e.stopPropagation();if(open)closeSearch();else openSearch();});
+  clearBtn.addEventListener('click',function(e){e.stopPropagation();closeSearch();});
+  input.addEventListener('input',function(){
+    var q=input.value.trim().toLowerCase();if(!q){results.style.display='none';return;}
+    var hits=[];
+    SHOP_ITEMS.forEach(function(s){if(s.name.toLowerCase().indexOf(q)>=0||s.desc.toLowerCase().indexOf(q)>=0)hits.push({label:s.name,sub:'Shop - $'+s.price,page:'shop'});});
+    TRAINING_ITEMS.forEach(function(t){if(t.name.toLowerCase().indexOf(q)>=0||t.desc.toLowerCase().indexOf(q)>=0)hits.push({label:t.name,sub:'Training - '+(t.price?'$'+fmt(t.price):'Custom'),page:'training'});});
+    [{label:'Methods Capabilities',sub:'Page',page:'methods'},{label:'About Method Endeavors',sub:'Page',page:'about'},{label:'Inquire Contact',sub:'Page',page:'inquire'}].forEach(function(p){if(p.label.toLowerCase().indexOf(q)>=0)hits.push(p);});
+    var h='';
+    if(!hits.length){h='<div style="padding:16px 18px;font-family:var(--fu);font-size:11px;color:var(--muted);letter-spacing:1px;">No results found.</div>';}
+    else{hits.forEach(function(hit){h+='<div class="search-result-row" data-search-page="'+hit.page+'"><div><p style="font-family:var(--fu);font-size:13px;font-weight:600;color:var(--white);">'+hit.label+'</p><p style="font-family:var(--fu);font-size:10px;color:var(--muted);margin-top:2px;">'+hit.sub+'</p></div><span style="font-family:var(--fu);font-size:10px;color:var(--accent);">&rarr;</span></div>';});}
+    results.innerHTML=h;results.style.display='block';
+  });
+  results.addEventListener('click',function(e){var row=e.target.closest('[data-search-page]');if(row){showPage(row.dataset.searchPage);closeSearch();}});
+  document.addEventListener('click',function(e){var wrap=g('nav-search-wrap');if(wrap&&!wrap.contains(e.target)&&results&&!results.contains(e.target))closeSearch();});
+}
+
+/* Global click handler */
+document.addEventListener('click',function(e){
+  var t=e.target;
+  if(t.matches('.nav-btn[data-page]')){showPage(t.dataset.page);return;}
+  if(t.matches('[data-page]')&&!t.matches('.nav-btn')){showPage(t.dataset.page);return;}
+  if(t.closest('#cart-toggle-btn')){toggleCart();return;}
+  if(t.matches('#cart-backdrop')||t.matches('#cart-close-btn')){toggleCart();return;}
+  if(t.matches('[data-cartremove]')){removeFromCart(t.dataset.cartremove);return;}
+  if(t.matches('[data-cartqty]')){changeCartQty(t.dataset.cartqty,parseInt(t.dataset.delta));return;}
+  if(t.matches('#checkout-btn')){handleCheckout();return;}
+  if(t.closest('#profile-nav-btn')){openProfilePanel();return;}
+  if(t.matches('#profile-close-btn')){closeProfilePanel();return;}
+  if(t.matches('#logout-btn')){logout();return;}
+  if(t.matches('#sub-toggle-btn')){toggleSubscription();return;}
+  if(t.matches('#auth-modal-close')||(t.matches('#auth-modal')&&!t.closest('.modal-box'))){closeAuthModal();return;}
+  if(t.matches('#tab-signin-btn')){g('tab-signin').classList.add('active');g('tab-signup').classList.remove('active');t.classList.add('active');g('tab-signup-btn').classList.remove('active');return;}
+  if(t.matches('#tab-signup-btn')){g('tab-signup').classList.add('active');g('tab-signin').classList.remove('active');t.classList.add('active');g('tab-signin-btn').classList.remove('active');return;}
+  if(t.matches('#signin-submit-btn')){signIn();return;}
+  if(t.matches('#signup-submit-btn')){signUp();return;}
+  if(t.matches('#nl-submit-btn')){var em=g('nl-email');if(em&&em.value.trim()){g('nl-confirm').style.display='block';em.value='';}return;}
+  if(t.matches('#inq-submit-btn')){g('inquire-form').style.display='none';g('inquire-success').style.display='block';return;}
+  if(t.matches('#inquire-again-btn')){g('inquire-form').style.display='block';g('inquire-success').style.display='none';return;}
+  if(t.matches('#booking-submit-btn')){submitBooking();return;}
+  if(t.closest('.cap-card')){var cp=t.closest('.cap-card');if(cp.dataset.page)showPage(cp.dataset.page);return;}
+  if(t.matches('[data-toggle]')){
+    var id=t.dataset.toggle,panel=g('pexpand-'+id);if(!panel)return;
+    var isOpen=panel.classList.contains('open');
+    document.querySelectorAll('.product-expand.open').forEach(function(p){
+      p.classList.remove('open');
+      var ob=document.querySelector('[data-toggle="'+p.id.replace('pexpand-','')+'"]');
+      if(ob){ob.textContent='Select';ob.classList.remove('open');}
+    });
+    if(!isOpen){panel.classList.add('open');t.textContent='Close';t.classList.add('open');}
+    return;
+  }
+  if(t.matches('.size-btn:not(.sold-out)')){
+    var iid=t.dataset.item;
+    t.closest('.size-grid').querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('selected');});
+    t.classList.add('selected');
+    var sst=sState(parseInt(iid));sst.size=t.dataset.size;
+    var se=g('size-err-'+iid);if(se)se.style.display='none';
+    return;
+  }
+  if(t.matches('[data-qchange]')){
+    var qid=t.dataset.qchange,qdelta=parseInt(t.dataset.delta);
+    var qst=sState(parseInt(qid));qst.qty=Math.max(1,(qst.qty||1)+qdelta);
+    var qel=g('pqty-'+qid);if(qel)qel.textContent=qst.qty;
+    return;
+  }
+  if(t.matches('[data-additem]')){
+    var aid=parseInt(t.dataset.additem),aitem=null;
+    SHOP_ITEMS.forEach(function(s){if(s.id===aid)aitem=s;});
+    if(!aitem)return;
+    var st=sState(aid);
+    var needSize=aitem.sizes&&aitem.sizes.length>0&&aitem.sizes[0]!=='One Size';
+    if(needSize&&!st.size){var serr=g('size-err-'+aid);if(serr)serr.style.display='block';return;}
+    var col=aitem.colors[st.colorIdx];
+    var cName=col?col.name:'';
+    var sName=st.size||aitem.sizes[0]||'';
+    var cid=aid+'-'+cName+'-'+sName;
+    var nm=aitem.name+(cName?' / '+cName:'')+(sName?' ('+sName+')':'');
+    addToCart(cid,nm,aitem.price,st.qty||1);
+    shopState[aid]={colorIdx:st.colorIdx,imgIdx:st.imgIdx,qty:1,size:null};
+    var qe=g('pqty-'+aid);if(qe)qe.textContent=1;
+    var pn=g('pexpand-'+aid),tb=document.querySelector('[data-toggle="'+aid+'"]');
+    if(pn)pn.classList.remove('open');
+    if(tb){tb.textContent='Added!';tb.classList.remove('open');tb.style.color='var(--accent)';setTimeout(function(){tb.textContent='Select';tb.style.color='';},1800);}
+    var sg=document.querySelector('#pexpand-'+aid+' .size-grid');
+    if(sg)sg.querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('selected');});
+    return;
+  }
+  if(t.matches('[data-cat]')){
+    activeCat=t.dataset.cat;
+    document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.toggle('active',b.dataset.cat===activeCat);});
+    renderShop();return;
+  }
+  if(t.matches('#shop-search')||t.closest('#shop-search'))return;
+});
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeAuthModal();closeProfilePanel();if(g('cart-overlay')&&g('cart-overlay').classList.contains('open'))toggleCart();}
+});
+
+/* Shop search input listener — added after DOM ready */
+document.addEventListener('input',function(e){
+  if(e.target&&e.target.id==='shop-search')renderShop();
+});
+
+document.getElementById('root').innerHTML=buildRoot();
+renderShop();
+initSearch();
+initLightbox();
+</script>
 </body>
 </html>
