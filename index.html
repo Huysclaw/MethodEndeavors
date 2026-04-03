@@ -201,10 +201,10 @@ footer{border-top:1px solid var(--border);padding:24px 36px;display:flex;align-i
 .footer-social{display:flex;gap:14px}
 .footer-social a{color:var(--muted);text-decoration:none;font-family:var(--fu);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;transition:color .15s}
 .footer-social a:hover{color:var(--accent)}
-#nav-search-box{display:none;position:absolute;right:0;top:64px;background:var(--panel);border:1px solid var(--border);border-bottom:1px solid var(--accent);align-items:center;z-index:51}
+#nav-search-box{display:none;position:absolute;right:0;top:100%;background:var(--panel);border:1px solid var(--border);border-bottom:1px solid var(--accent);align-items:center;z-index:51;width:264px}
 #nav-search-input{width:220px;height:36px;background:transparent;border:none;padding:0 12px;font-family:var(--fu);font-size:12px;letter-spacing:.5px;color:var(--text);outline:none}
 #nav-search-clear{background:none;border:none;cursor:pointer;color:var(--muted);padding:0 10px;font-size:14px}
-#nav-search-results{display:none;position:absolute;top:100px;right:0;width:320px;background:var(--dark);border:1px solid var(--border);border-top:none;border-bottom:2px solid var(--accent);z-index:51;max-height:400px;overflow-y:auto}
+#nav-search-results{display:none;position:absolute;top:calc(100% + 36px);right:0;width:264px;background:var(--dark);border:1px solid var(--border);border-top:none;border-bottom:2px solid var(--accent);z-index:51;max-height:400px;overflow-y:auto}
 .search-result-row{padding:12px 18px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .search-result-row:hover{background:var(--card)}
 /* Lightbox */
@@ -909,8 +909,8 @@ function buildRoot(){
   h+='<div class="nav-links"><button class="nav-btn active" data-page="home">Home</button><button class="nav-btn" data-page="shop">Shop</button><button class="nav-btn" data-page="training">Training</button><button class="nav-btn" data-page="methods">Methods</button><button class="nav-btn" data-page="about">About</button><button class="nav-btn" data-page="inquire">Inquire</button></div>';
   h+='<div class="nav-right" style="position:relative;">';
   h+='<div id="nav-search-wrap" style="position:relative;display:flex;align-items:center;"><button class="search-icon-btn" id="search-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>';
-  h+='<div id="nav-search-box"><input type="text" id="nav-search-input" placeholder="Search..." /><button id="nav-search-clear">x</button></div></div>';
-  h+='<div id="nav-search-results"></div>';
+  h+='<div id="nav-search-box"><input type="text" id="nav-search-input" placeholder="Search..." /><button id="nav-search-clear">x</button></div>';
+  h+='<div id="nav-search-results"></div></div>';
   h+='<button class="profile-btn" id="profile-nav-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span id="profile-nav-label">Sign In</span></button>';
   h+='<button class="cart-btn" id="cart-toggle-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span id="cart-label">Cart</span></button>';
   h+='</div></nav>';
